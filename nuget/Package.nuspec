@@ -14,8 +14,8 @@
   <files>
     <file src="..\InterLinq\bin\Debug\InterLinq.dll" target="lib\net40" />
     <file src="..\InterLinq\bin\Debug\InterLinq.pdb" target="lib\net40" />
-	<file src="..\InterLinq_WinRT\bin\Debug\InterLinq.dll" target="lib\netcore451" />
-    <file src="..\InterLinq_WinRT\bin\Debug\InterLinq.pdb" target="lib\netcore451" />
+	<file src="..\WinRT\InterLinq_WinRT\bin\Debug\InterLinq.dll" target="lib\netcore451" />
+    <file src="..\WinRT\InterLinq_WinRT\bin\Debug\InterLinq.pdb" target="lib\netcore451" />
 	<file src="..\Silverlight\InterLinq_SL4\Bin\Debug\InterLinq.dll" target="lib\sl5" />
     <file src="..\Silverlight\InterLinq_SL4\Bin\Debug\InterLinq.pdb" target="lib\sl5" />
   </files>
