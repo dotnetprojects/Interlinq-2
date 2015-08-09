@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<package >
+  <metadata>
+    <id>DotNetProjects.Interlinq</id>
+    <version>$version$</version>
+    <authors>DotNetProjects</authors>
+    <owners>DotNetProjects</owners>
+    <licenseUrl>http://opensource.org/licenses/MS-PL</licenseUrl>
+    <projectUrl>https://github.com/dotnetprojects/Interlinq-2</projectUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>Framework Assembly for DotNetProjects.Interlinq</description>
+    <copyright>Copyright 2015</copyright>
+  </metadata>
+  <files>
+    <file src="..\InterLinq\bin\Debug\InterLinq.dll" target="lib\net40" />
+    <file src="..\InterLinq\bin\Debug\InterLinq.pdb" target="lib\net40" />
+	<file src="..\InterLinq_WinRT\bin\Debug\InterLinq.dll" target="lib\netcore451" />
+    <file src="..\InterLinq_WinRT\bin\Debug\InterLinq.pdb" target="lib\netcore451" />
+	<file src="..\Silverlight\InterLinq_SL4\Bin\Debug\InterLinq.dll" target="lib\sl5" />
+    <file src="..\Silverlight\InterLinq_SL4\Bin\Debug\InterLinq.pdb" target="lib\sl5" />
+  </files>
+</package>
