@@ -70,10 +70,19 @@ namespace InterLinq.Communication
         public override object Execute(Expression expression)
         {
             SerializableExpression serExp = expression.MakeSerializable();
-#if !SILVERLIGHT           
-            object receivedObject = Handler.Retrieve(serExp);            
+#if !SILVERLIGHT
+			try
+            {
+				return Handler.Retrieve(serExp); 
+			}
+			catch (Exception ex)
+            {
+	            if (ExceptionOccured != null)
+					ExceptionOccured(ex);
+                throw;
+            }           
 #else
-            IAsyncResult asyncResult = Handler.BeginRetrieve(serExp, null, null);
+			IAsyncResult asyncResult = Handler.BeginRetrieve(serExp, null, null);
             object receivedObject = null;
 
             if (!asyncResult.CompletedSynchronously)
@@ -83,7 +92,7 @@ namespace InterLinq.Communication
 
             try
             {
-                receivedObject = Handler.EndRetrieve(asyncResult);
+                return Handler.EndRetrieve(asyncResult);
             }
             catch (Exception ex)
             {
@@ -100,7 +109,6 @@ namespace InterLinq.Communication
 #endif
             }
 #endif
-                return receivedObject;
         }
 
         #endregion
