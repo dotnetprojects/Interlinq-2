@@ -24,9 +24,7 @@ namespace InterLinq.Communication
 
 		#region Properties
 
-		public delegate void ExceptionOccuredHandler(Exception ex);
-
-		public ExceptionOccuredHandler ExceptionOccured { get; set; }
+		public ClientQueryHandler.ExceptionOccuredHandler ExceptionOccured { get; set; }
 
 		#endregion
 
