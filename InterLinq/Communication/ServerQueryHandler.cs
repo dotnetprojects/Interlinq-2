@@ -78,7 +78,7 @@ namespace InterLinq.Communication
         /// </param>
         /// <returns>Returns requested data.</returns>
         /// <seealso cref="IQueryRemoteHandler.Retrieve"/>
-        public object Retrieve(SerializableExpression expression)
+        public virtual object Retrieve(SerializableExpression expression)
         {
             try
             {
@@ -164,7 +164,7 @@ namespace InterLinq.Communication
         ///     </item>
         /// </list>
         /// </remarks>
-        public object RetrieveGeneric<T>(SerializableExpression serializableExpression)
+        public virtual object RetrieveGeneric<T>(SerializableExpression serializableExpression)
         {
             object session = null;
             try
