@@ -171,6 +171,10 @@ namespace InterLinq
         /// </returns>
         public IEnumerator<T> GetEnumerator()
         {
+            if (provider == null)
+            {
+                return (new List<T>()).GetEnumerator();
+            }
             IEnumerable retrievedObjects = (IEnumerable)provider.Execute(expression);
             object returnValue = TypeConverter.ConvertFromSerializable(typeof(IEnumerable<T>), retrievedObjects);
             if (returnValue == null)
