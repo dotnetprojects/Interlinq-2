@@ -18,7 +18,7 @@ namespace InterLinq
 #if !SILVERLIGHT
     [Serializable]
 #endif
-    [DataContract(Name = "InterLinqQueryOf{0}", Namespace = "http://schemas.interlinq.com/2011/03/")]
+    [DataContract(Name = "InterLinqQueryOf{0}_Hash{#}", Namespace = "http://schemas.interlinq.com/2011/03/")]
     public class InterLinqQuery<T> : InterLinqQueryBase, IOrderedQueryable<T>
     {
         #region Fields
