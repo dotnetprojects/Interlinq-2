@@ -13,8 +13,8 @@ assembly_info:
 
 configuration: Debug
 
-#before_build:
-#  - nuget restore
+before_build:
+  - nuget restore
   
 build:
   project: Interlinq.sln
