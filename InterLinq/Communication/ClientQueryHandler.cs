@@ -11,17 +11,17 @@ namespace InterLinq.Communication
     public class ClientQueryHandler : InterLinqQueryHandler
     {
 
-		#region Properties
+        #region Properties
 
-		public delegate void ExceptionOccuredHandler(Exception ex);
+        public delegate void ExceptionOccuredHandler(Exception ex);
 
-		public ExceptionOccuredHandler ExceptionOccured { get; set; }
+        public ExceptionOccuredHandler ExceptionOccured { get; set; }
 
-		/// <summary>
-		/// Gets the <see cref="IQueryProvider"/>.
-		/// </summary>
-		/// <seealso cref="InterLinqQueryHandler.QueryProvider"/>
-		public override IQueryProvider QueryProvider
+        /// <summary>
+        /// Gets the <see cref="IQueryProvider"/>.
+        /// </summary>
+        /// <seealso cref="InterLinqQueryHandler.QueryProvider"/>
+        public override IQueryProvider QueryProvider
         {
             get { return new ClientQueryProvider(QueryRemoteHandler) { ExceptionOccured = ExceptionOccured }; }
         }

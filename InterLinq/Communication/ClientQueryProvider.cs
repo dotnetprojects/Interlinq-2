@@ -13,28 +13,28 @@ namespace InterLinq.Communication
     /// <seealso cref="IQueryProvider"/>
     public class ClientQueryProvider : InterLinqQueryProvider
     {
-		#region Property Handler
+        #region Property Handler
 
         /// <summary>
         /// Gets the <see cref="IQueryRemoteHandler"/>;
         /// </summary>
         public IQueryRemoteHandler Handler { get; private set; }
 
-		#endregion
+        #endregion
 
-		#region Properties
+        #region Properties
 
-		public ClientQueryHandler.ExceptionOccuredHandler ExceptionOccured { get; set; }
+        public ClientQueryHandler.ExceptionOccuredHandler ExceptionOccured { get; set; }
 
-		#endregion
+        #endregion
 
-		#region Constructors
+        #region Constructors
 
-		/// <summary>
-		/// Initializes this class.
-		/// </summary>
-		/// <param name="queryRemoteHandler"><see cref="IQueryRemoteHandler"/> to communicate with the server.</param>
-		public ClientQueryProvider(IQueryRemoteHandler queryRemoteHandler)
+        /// <summary>
+        /// Initializes this class.
+        /// </summary>
+        /// <param name="queryRemoteHandler"><see cref="IQueryRemoteHandler"/> to communicate with the server.</param>
+        public ClientQueryProvider(IQueryRemoteHandler queryRemoteHandler)
         {
             if (queryRemoteHandler == null)
             {
@@ -43,18 +43,18 @@ namespace InterLinq.Communication
             Handler = queryRemoteHandler;
         }
 
-		#endregion
-			 
-		#region Methods
+        #endregion
+             
+        #region Methods
 
-		/// <summary>
-		/// Executes the query and returns the requested data.
-		/// </summary>
-		/// <typeparam name="TResult">Type of the return value.</typeparam>
-		/// <param name="expression"><see cref="Expression"/> tree to execute.</param>
-		/// <returns>Returns the requested data of Type 'TResult'.</returns>
-		/// <seealso cref="InterLinqQueryProvider.Execute"/>
-		public override TResult Execute<TResult>(Expression expression)
+        /// <summary>
+        /// Executes the query and returns the requested data.
+        /// </summary>
+        /// <typeparam name="TResult">Type of the return value.</typeparam>
+        /// <param name="expression"><see cref="Expression"/> tree to execute.</param>
+        /// <returns>Returns the requested data of Type 'TResult'.</returns>
+        /// <seealso cref="InterLinqQueryProvider.Execute"/>
+        public override TResult Execute<TResult>(Expression expression)
         {
             return (TResult)TypeConverter.ConvertFromSerializable(typeof(TResult), Execute(expression));
         }
@@ -69,18 +69,18 @@ namespace InterLinq.Communication
         {
             SerializableExpression serExp = expression.MakeSerializable();
 #if !SILVERLIGHT
-			try
+            try
             {
-				return Handler.Retrieve(serExp); 
-			}
-			catch (Exception ex)
+                return Handler.Retrieve(serExp); 
+            }
+            catch (Exception ex)
             {
-	            if (ExceptionOccured != null)
-					ExceptionOccured(ex);
+                if (ExceptionOccured != null)
+                    ExceptionOccured(ex);
                 throw;
             }           
 #else
-			IAsyncResult asyncResult = Handler.BeginRetrieve(serExp, null, null);
+            IAsyncResult asyncResult = Handler.BeginRetrieve(serExp, null, null);
             object receivedObject = null;
 
             if (!asyncResult.CompletedSynchronously)
@@ -94,8 +94,8 @@ namespace InterLinq.Communication
             }
             catch (Exception ex)
             {
-	            if (ExceptionOccured != null)
-					ExceptionOccured(ex);
+                if (ExceptionOccured != null)
+                    ExceptionOccured(ex);
                 throw;
             }
             finally

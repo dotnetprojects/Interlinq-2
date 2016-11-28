@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Globalization;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
@@ -93,7 +94,10 @@ namespace InterLinq.Expressions.Helpers
                     return Expression.Constant(newQry);
                 }
 #if !NETFX_CORE
-                return Expression.Constant(expression.Value, expression.Type.GetClrVersion() as Type);
+                var type = expression.Type.GetClrVersion() as Type;
+                var value = Convert.ChangeType(expression.Value, type, CultureInfo.InvariantCulture);
+                var retVal = Expression.Constant(value, type);
+                return retVal;
 #else
                 return Expression.Constant(expression.Value, ((TypeInfo)expression.Type.GetClrVersion()).AsType());
 #endif
