@@ -95,9 +95,18 @@ namespace InterLinq.Expressions.Helpers
                 }
 #if !NETFX_CORE
                 var type = expression.Type.GetClrVersion() as Type;
-                var value = Convert.ChangeType(expression.Value, type, CultureInfo.InvariantCulture);
-                var retVal = Expression.Constant(value, type);
-                return retVal;
+                if (type.IsEnum)
+                {
+                    var value = Enum.ToObject(type, expression.Value);
+                    var retVal = Expression.Constant(value, type);
+                    return retVal;
+                }
+                else
+                {
+                    var value = Convert.ChangeType(expression.Value, type, CultureInfo.InvariantCulture);
+                    var retVal = Expression.Constant(value, type);
+                    return retVal;
+                }
 #else
                 return Expression.Constant(expression.Value, ((TypeInfo)expression.Type.GetClrVersion()).AsType());
 #endif
