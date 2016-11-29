@@ -95,20 +95,10 @@ namespace InterLinq.Expressions.Helpers
                 }
 #if !NETFX_CORE
                 var type = expression.Type.GetClrVersion() as Type;
-                if (type.IsEnum)
-                {
-                    var value = Enum.ToObject(type, expression.Value);
-                    var retVal = Expression.Constant(value, type);
-                    return retVal;
-                }
-                else
-                {
-                    var value = Convert.ChangeType(expression.Value, type, CultureInfo.InvariantCulture);
-                    var retVal = Expression.Constant(value, type);
-                    return retVal;
-                }
+                return Expression.Constant(ConvertValueToTargetType(expression.Value, type), type);
 #else
-                return Expression.Constant(expression.Value, ((TypeInfo)expression.Type.GetClrVersion()).AsType());
+                var type = ((TypeInfo)expression.Type.GetClrVersion()).AsType();
+                return Expression.Constant(ConvertValueToTargetType(expression.Value, type), type);
 #endif
             }
 #if !NETFX_CORE
@@ -427,6 +417,24 @@ namespace InterLinq.Expressions.Helpers
             // Without this check, we were able to delete files from the server disk
             // using System.IO.File.Delete( ... )!
             throw new SecurityException(string.Format("Could not call method '{0}' of type '{1}'. Type must be Queryable.", ex.Method.Name, ex.Method.DeclaringType.Name));
+        }
+
+        /// <summary>
+        /// Helper function to use the correct Types (for example when you use json.net for serialization, it's lost)
+        /// </summary>
+        /// <param name="value"></param>
+        /// <param name="targeType"></param>
+        /// <returns></returns>
+        private object ConvertValueToTargetType(object value, Type targeType)
+        {
+            if (targeType.IsEnum)
+            {
+                return Enum.ToObject(targeType, value);
+            }
+            else
+            {
+                return Convert.ChangeType(value, targeType, CultureInfo.InvariantCulture);
+            }
         }
     }
 }
