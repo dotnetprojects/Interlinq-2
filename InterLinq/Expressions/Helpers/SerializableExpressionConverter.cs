@@ -430,7 +430,7 @@ namespace InterLinq.Expressions.Helpers
 #if !NETFX_CORE
             if (targeType.IsEnum)
 #else
-            if (targeType.GetTypeInfo().IsEnum())
+            if (targeType.GetTypeInfo.IsEnum())
 #endif
             {
                 return Enum.ToObject(targeType, value);
