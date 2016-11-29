@@ -402,6 +402,18 @@ namespace InterLinq.Expressions.Helpers
                     {
                         args.Add(VisitResult(currentArg, sessionObject));
                     }
+
+#if !NETFX_CORE
+                    if (!currentParameterType.IsClass && !currentParameterType.IsAssignableFrom(args[args.Count - 1].GetType()))
+                    {
+                        args[args.Count - 1] = ConvertValueToTargetType(args[args.Count - 1], currentParameterType);
+                    }
+#else
+                    if (!currentParameterType.GetTypeInfo().IsClass && !currentParameterType.GetTypeInfo().IsAssignableFrom(args[args.Count - 1].GetType().GetTypeInfo()))
+                    {
+                        args[args.Count - 1] = ConvertValueToTargetType(args[args.Count - 1], currentParameterType);
+                    }
+#endif
                 }
 
                 var ret = ((MethodInfo) ex.Method.GetClrVersion()).Invoke(ex.Object, args.ToArray());
