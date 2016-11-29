@@ -427,7 +427,11 @@ namespace InterLinq.Expressions.Helpers
         /// <returns></returns>
         private object ConvertValueToTargetType(object value, Type targeType)
         {
+#if !NETFX_CORE
             if (targeType.IsEnum)
+#else
+            if (targeType.IsEnum())
+#endif
             {
                 return Enum.ToObject(targeType, value);
             }
