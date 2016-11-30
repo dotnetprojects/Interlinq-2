@@ -481,19 +481,29 @@ namespace InterLinq.Types
         /// <returns></returns>
         public static object ConvertValueToTargetType(object value, Type targeType)
         {
+
 #if !NETFX_CORE
-            if (targeType.IsEnum)
+            if (!targeType.IsClass)
 #else
-            if (targeType.GetTypeInfo().IsEnum)
+            if (!targeType.GetTypeInfo().IsClass)
 #endif
             {
-                return Enum.ToObject(targeType, value);
-            }
-            else
-            {
-                return Convert.ChangeType(value, targeType, CultureInfo.InvariantCulture);
-            }
-        }
 
+#if !NETFX_CORE
+                if (targeType.IsEnum)
+#else
+                if (targeType.GetTypeInfo().IsEnum)
+#endif
+                {
+                    return Enum.ToObject(targeType, value);
+                }
+                else
+                {
+                    return Convert.ChangeType(value, targeType, CultureInfo.InvariantCulture);
+                }
+            }
+
+            return value;
+        }
     }
 }
