@@ -483,9 +483,9 @@ namespace InterLinq.Types
         {
 
 #if !NETFX_CORE
-            if (!targeType.IsClass)
+            if (!targeType.IsClass && !targeType.IsInterface)
 #else
-            if (!targeType.GetTypeInfo().IsClass)
+            if (!targeType.GetTypeInfo().IsClass && !targeType.GetTypeInfo().IsInterface)
 #endif
             {
 
