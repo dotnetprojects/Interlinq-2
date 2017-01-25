@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Reflection;
 using System.Linq;
 using InterLinq.Types.Anonymous;
+using System.Globalization;
 
 namespace InterLinq.Types
 {
@@ -41,7 +42,7 @@ namespace InterLinq.Types
                 Type[] genericType = objectToConvert.GetType().GetTypeInfo().GenericTypeArguments;
 #endif
 #if !SILVERLIGHT
-    			MethodInfo method = typeof(TypeConverter).GetMethod("ConvertFromInterLinqGrouping", BindingFlags.NonPublic | BindingFlags.Static).MakeGenericMethod(genericType);
+                MethodInfo method = typeof(TypeConverter).GetMethod("ConvertFromInterLinqGrouping", BindingFlags.NonPublic | BindingFlags.Static).MakeGenericMethod(genericType);
 #else
 #if !NETFX_CORE
                 MethodInfo method = typeof(TypeConverter).GetMethod("ConvertFromInterLinqGrouping", BindingFlags.Public | BindingFlags.Static).MakeGenericMethod(genericType);
@@ -136,7 +137,7 @@ namespace InterLinq.Types
                 }
                 return constructor.Invoke(properties.ToArray());
             }
-            return objectToConvert;
+            return ConvertValueToTargetType(objectToConvert, wantedType);
         }
 
 #if !SILVERLIGHT
@@ -167,13 +168,13 @@ namespace InterLinq.Types
             var tp = wantedType.GetElementType();
             foreach (var interLinqGrouping in grouping)
             {
-                retVal.Add((InterLinqGroupingBase) ConvertFromInterLinqGrouping(tp, interLinqGrouping));
+                retVal.Add((InterLinqGroupingBase)ConvertFromInterLinqGrouping(tp, interLinqGrouping));
 
             }
             return retVal.ToArray();
         }
 
-		/// <summary>
+        /// <summary>
         /// Converts each element of an <see cref="IEnumerable"/> 
         /// into a target <see cref="Type"/>.
         /// </summary>
@@ -470,7 +471,39 @@ namespace InterLinq.Types
         }
 #endif
 
-#endregion
+        #endregion
 
+        /// <summary>
+        /// Helper function to use the correct Types (for example when you use json.net for serialization, it's lost)
+        /// </summary>
+        /// <param name="value"></param>
+        /// <param name="targeType"></param>
+        /// <returns></returns>
+        public static object ConvertValueToTargetType(object value, Type targeType)
+        {
+
+#if !NETFX_CORE
+            if (!targeType.IsClass && !targeType.IsInterface)
+#else
+            if (!targeType.GetTypeInfo().IsClass && !targeType.GetTypeInfo().IsInterface)
+#endif
+            {
+
+#if !NETFX_CORE
+                if (targeType.IsEnum)
+#else
+                if (targeType.GetTypeInfo().IsEnum)
+#endif
+                {
+                    return Enum.ToObject(targeType, value);
+                }
+                else
+                {
+                    return Convert.ChangeType(value, targeType, CultureInfo.InvariantCulture);
+                }
+            }
+
+            return value;
         }
     }
+}

@@ -7,6 +7,7 @@ using System.Linq.Expressions;
 using System.Reflection;
 using System.Security;
 using InterLinq.Expressions.SerializableTypes;
+using InterLinq.Types;
 
 namespace InterLinq.Expressions.Helpers
 {
@@ -95,10 +96,10 @@ namespace InterLinq.Expressions.Helpers
                 }
 #if !NETFX_CORE
                 var type = expression.Type.GetClrVersion() as Type;
-                return Expression.Constant(ConvertValueToTargetType(expression.Value, type), type);
+                return Expression.Constant(TypeConverter.ConvertValueToTargetType(expression.Value, type), type);
 #else
                 var type = ((TypeInfo)expression.Type.GetClrVersion()).AsType();
-                return Expression.Constant(ConvertValueToTargetType(expression.Value, type), type);
+                return Expression.Constant(TypeConverter.ConvertValueToTargetType(expression.Value, type), type);
 #endif
             }
 #if !NETFX_CORE
@@ -406,12 +407,12 @@ namespace InterLinq.Expressions.Helpers
 #if !NETFX_CORE
                     if (!currentParameterType.IsClass && !currentParameterType.IsAssignableFrom(args[args.Count - 1].GetType()))
                     {
-                        args[args.Count - 1] = ConvertValueToTargetType(args[args.Count - 1], currentParameterType);
+                        args[args.Count - 1] = TypeConverter.ConvertValueToTargetType(args[args.Count - 1], currentParameterType);
                     }
 #else
                     if (!currentParameterType.GetTypeInfo().IsClass && !currentParameterType.GetTypeInfo().IsAssignableFrom(args[args.Count - 1].GetType().GetTypeInfo()))
                     {
-                        args[args.Count - 1] = ConvertValueToTargetType(args[args.Count - 1], currentParameterType);
+                        args[args.Count - 1] = TypeConverter.ConvertValueToTargetType(args[args.Count - 1], currentParameterType);
                     }
 #endif
                 }
@@ -431,30 +432,6 @@ namespace InterLinq.Expressions.Helpers
             throw new SecurityException(string.Format("Could not call method '{0}' of type '{1}'. Type must be Queryable.", ex.Method.Name, ex.Method.DeclaringType.Name));
         }
 
-        /// <summary>
-        /// Helper function to use the correct Types (for example when you use json.net for serialization, it's lost)
-        /// </summary>
-        /// <param name="value"></param>
-        /// <param name="targeType"></param>
-        /// <returns></returns>
-        private object ConvertValueToTargetType(object value, Type targeType)
-        {
-#if !NETFX_CORE
-            if (targeType.IsEnum)
-#else
-            if (targeType.GetTypeInfo().IsEnum)
-#endif
-            {
-                return Enum.ToObject(targeType, value);
-            }
-            else if ((targeType== typeof(Guid) || targeType == typeof(Guid?)) && value is string)
-            {
-                return new Guid((string)value);
-            }
-            else
-            {
-                return Convert.ChangeType(value, targeType, CultureInfo.InvariantCulture);
-            }
-        }
+        
     }
 }
