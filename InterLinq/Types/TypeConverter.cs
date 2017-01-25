@@ -497,6 +497,10 @@ namespace InterLinq.Types
                 {
                     return Enum.ToObject(targeType, value);
                 }
+                else if ((targeType == typeof(Guid) || targeType == typeof(Guid?)) && value is string)
+                {
+                    return new Guid((string)value);
+                }
                 else
                 {
                     return Convert.ChangeType(value, targeType, CultureInfo.InvariantCulture);
