@@ -495,6 +495,10 @@ namespace InterLinq.Types
                 if (targeType.GetTypeInfo().IsEnum)
 #endif
                 {
+                    if (value is string)
+                    {
+                        return Enum.Parse(targeType, (string)value, true);
+                    }
                     return Enum.ToObject(targeType, value);
                 }
                 else if ((targeType == typeof(Guid) || targeType == typeof(Guid?)) && value is string)
@@ -503,6 +507,26 @@ namespace InterLinq.Types
                 }
                 else
                 {
+                    if (value != null)
+                    {
+                        var underlyingType = Nullable.GetUnderlyingType(targeType);
+#if !NETFX_CORE
+                        if (underlyingType != null && underlyingType.IsEnum)
+#else
+                        if (underlyingType != null && underlyingType.GetTypeInfo().IsEnum)
+#endif
+                        {
+                            if (value is string)
+                            {
+                                return Enum.Parse(underlyingType, (string)value, true);
+                            }
+                            return Enum.ToObject(underlyingType, value);
+                        }
+                        else if (underlyingType != null)
+                        {
+                            return Convert.ChangeType(value, underlyingType, CultureInfo.InvariantCulture);
+                        }
+                    }
                     return Convert.ChangeType(value, targeType, CultureInfo.InvariantCulture);
                 }
             }
