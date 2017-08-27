@@ -120,7 +120,7 @@ namespace InterLinq.Communication
             }
             catch (Exception ex)
             {
-                if (!HandleExceptionInRetrieve(ex))
+                if (!HandleExceptionInRetrieve(ex, expression))
                     throw;
                 else
                     return null;
@@ -253,7 +253,7 @@ namespace InterLinq.Communication
         /// Thrown <see cref="Exception"/> 
         /// in <see cref="IQueryRemoteHandler.Retrieve"/> Method.
         /// </param>
-        protected virtual bool HandleExceptionInRetrieve(Exception exception)
+        protected virtual bool HandleExceptionInRetrieve(Exception exception, SerializableExpression expression)
         {
             return false;
         }
