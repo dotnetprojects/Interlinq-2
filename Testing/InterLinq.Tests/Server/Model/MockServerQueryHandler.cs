@@ -9,6 +9,7 @@ using System.Runtime.Serialization;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 using InterLinq;
+using InterLinq.Expressions;
 using InterLinq.JsonNet;
 
 namespace InterLinq.Tests.Server.Model
@@ -22,14 +23,18 @@ namespace InterLinq.Tests.Server.Model
             this.serverQueryHandler = new Communication.ServerQueryHandler(new MockQueryHandler());
         }
 
+        class test
+        {
+            public Object Expression { get; set; }
+        }
         public object Retrieve(Expressions.SerializableExpression expression)
         {
             var s = new JsonSerializerSettings() { TypeNameHandling = TypeNameHandling.Auto, PreserveReferencesHandling = PreserveReferencesHandling.Objects };
             s.Converters.Add(new InterlinqJsonConverter());
             s.ContractResolver = new InterLinqQueryContractResolver();
-            var aa = JsonConvert.SerializeObject(expression, s);
-            var q = JsonConvert.DeserializeObject(aa, s);
-            return this.serverQueryHandler.Retrieve(expression);
+            var aa = JsonConvert.SerializeObject(new test {Expression = expression}, s);
+            var q = JsonConvert.DeserializeObject<test>(aa, s);
+            return this.serverQueryHandler.Retrieve((SerializableExpression)q.Expression);
         }
     }
 }
