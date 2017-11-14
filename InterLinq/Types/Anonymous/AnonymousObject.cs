@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Dynamic;
-using System.Linq;
 using System.Runtime.Serialization;
 using System.Text;
 
@@ -14,7 +12,7 @@ namespace InterLinq.Types.Anonymous
     [Serializable]
 #endif
     [DataContract(Namespace="http://schemas.interlinq.com/2011/03/")]
-    public class AnonymousObject : DynamicObject
+    public class AnonymousObject
     {
 
         #region Properties
@@ -51,40 +49,6 @@ namespace InterLinq.Types.Anonymous
         #endregion
 
         #region Methods
-
-        public override IEnumerable<string> GetDynamicMemberNames()
-        {
-            return Properties.Select(x => x.Name).ToList();
-        }
-
-        public override bool TryGetMember(GetMemberBinder binder, out object result)
-        {
-            var prp = this.Properties.FirstOrDefault(x => x.Name == binder.Name);
-
-            if (prp != null)
-            {
-                result = prp.Value;
-                return true;
-            }
-
-            result = null;
-            return false;
-        }
-
-        public override bool TrySetMember(SetMemberBinder binder, object value)
-        {
-            var prp = this.Properties.FirstOrDefault(x => x.Name == binder.Name);
-
-            if (prp != null)
-            {
-                prp.Value = value;
-            }
-            else
-            {
-                this.Properties.Add(new AnonymousProperty(binder.Name, value));
-            }
-            return true;
-        }
 
         /// <summary>
         /// Returns a string representing this <see cref="AnonymousObject"/>.
