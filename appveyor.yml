@@ -29,6 +29,10 @@ artifacts:
     name: InterLinq.dll
   - path: InterLinq\bin\Debug\InterLinq.pdb
     name: InterLinq.pdb
+  - path: InterLinq.JsonNet\bin\Debug\InterLinq.JsonNet.dll
+    name: InterLinq.JsonNet.dll
+  - path: InterLinq.JsonNet\bin\Debug\InterLinq.JsonNet.pdb
+    name: InterLinq.JsonNet.pdb
   - path: '**\DotNetProjects.*.nupkg'
 
 #uncomment to publish to NuGet

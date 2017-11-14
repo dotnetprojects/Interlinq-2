@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<package >
+  <metadata>
+    <id>DotNetProjects.Interlinq.JsonNet</id>
+    <version>$version$</version>
+    <authors>DotNetProjects</authors>
+    <owners>DotNetProjects</owners>
+    <licenseUrl>http://opensource.org/licenses/MS-PL</licenseUrl>
+    <projectUrl>https://github.com/dotnetprojects/Interlinq-2</projectUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>Framework Assembly for DotNetProjects.Interlinq</description>
+    <copyright>Copyright 2015</copyright>
+	<dependencies>
+		<dependency id="Interlinq" version="3.0.24" />
+		<dependency id="Newtonsoft.Json" version="10.0.3" />
+	</dependencies>
+  </metadata>
+  <files>
+    <file src="..\Interlinq.JsonNet\bin\Debug\InterLinq.JsonNet.dll" target="lib\net40" />
+    <file src="..\Interlinq.JsonNet\bin\Debug\InterLinq.JsonNet.pdb" target="lib\net40" />
+  </files>
+</package>

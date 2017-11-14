@@ -5,38 +5,52 @@
 //Copyright © DMPortella.  All Rights Reserved.
 
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
-using System.Xml.Linq;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System.Linq.Expressions;
-using InterLinq;
-using InterLinq.Expressions;
-using InterLinq.Types;
 using InterLinq.Tests.Entities;
 using InterLinq.Tests.Client;
 using InterLinq.Tests.Server.Model;
+using NUnit.Framework;
 
 namespace InterLinq.Tests
 {
-    [TestClass]
+    [TestFixture]
     public class SerializationTests
     {
         private Client.IMockClientContext clientContext;
 
         private MockObjectRepository repository;
 
-        [TestInitialize]
+        [SetUp]
         public void Initialize()
         {
             clientContext = new Client.MockClientContext();
             repository = new MockObjectRepository();
         }
 
-        [TestCategory("Restriction Operators")]
-        [TestMethod]//[Title("Where_Simple 1")]
+        //[Category("Restriction Operators")]
+        //[Test()]
+        //public void Complex()
+        //{
+        //    var q = this.clientContext.Customers;
+        //    var cityCustomers = (from c in q
+        //        where c.City != null
+        //        select c);
+        //    var qry = cityCustomers.GroupBy(x => x.City)
+        //        .Select(x => new {CT = x.Key, b = x.Where(y => y.Address != null).GetHashCode()});
+        //    var ret = qry.ToList();
+        //    var expression = DynamicExpressionParser.ParseLambda(q.GetType(), null, "it.Where(City != null).GroupBy(City).Select(a => new (a.Key As CT, a.Where(x => x.Address != null).Count() As b))");
+        //    Delegate del = expression.Compile();
+        //    var ret2 = del.DynamicInvoke(q);
+        //    var qry2 = ((IEnumerable)ret2).AsQueryable();
+        //    foreach (var VARIABLE in qry2)
+        //    {
+        //        var data = VARIABLE;
+        //    }
+        //}
+
+        [Category("Restriction Operators")]
+        [Test()]
         [Description("This sample uses the where clause to find all elements of an array with a value less than 5.")]
         public void Where_Simple_1()
         {
@@ -61,8 +75,8 @@ namespace InterLinq.Tests
             Assert.IsTrue(actual.All(left => expected.Any(right => right.ProductID == left.ProductID)), "List of products where ids are lower then 5 are not identical");
         }
 
-        [TestCategory("Restriction Operators")]
-        [TestMethod]//[Title("Where_Simple 2")]
+        [Category("Restriction Operators")]
+        [Test]//[Title("Where_Simple 2")]
         [Description("This sample uses the where clause to find all products that are out of stock.")]
         public void Where_Simple_2()
         {
@@ -79,8 +93,8 @@ namespace InterLinq.Tests
             Assert.IsTrue(actual.ToList().All(left => expected.Any(right => right.ProductID == left.ProductID)), "List of sold out products are not identical");
         }
 
-        [TestCategory("Restriction Operators")]
-        [TestMethod]//[Title("Where_Simple 3")]
+        [Category("Restriction Operators")]
+        [Test]//[Title("Where_Simple 3")]
         [Description("This sample uses the where clause to find all products that are in stock and " +
                      "cost more than 3.00 per unit.")]
         public void Where_Simple_3()
@@ -98,8 +112,8 @@ namespace InterLinq.Tests
             Assert.IsTrue(actual.ToList().All(left => expected.Any(right => right.ProductID == left.ProductID)), "List of In-stock products that cost more than 3.00 are not identical");
         }
 
-        [TestCategory("Restriction Operators")]
-        [TestMethod]//[Title("Where_Drilldown")]
+        [Category("Restriction Operators")]
+        [Test]//[Title("Where_Drilldown")]
         [Description("This sample uses the where clause to find all customers in Washington " +
                      "and then it uses a foreach loop to iterate over the orders collection that belongs to each customer.")]
         public void Where_Drilldown()
@@ -120,8 +134,8 @@ namespace InterLinq.Tests
                 )), "List of Customers from Washington and their orders are not identical");
         }
 
-        [TestCategory("Restriction Operators")]
-        [TestMethod]//[Title("Where_Indexed")]
+        [Category("Restriction Operators")]
+        [Test]//[Title("Where_Indexed")]
         [Description("This sample demonstrates an indexed where clause that returns digits whose name is " +
                     "shorter than their value.")]
         public void Where_Indexed()
@@ -135,8 +149,8 @@ namespace InterLinq.Tests
             Assert.IsTrue(actual.All(left => expected.Any(right => string.Compare(left, right, false) == 0)), "List of digits whose name is shorter than their value are not identical");
         }
 
-        [TestCategory("Projection Operators")]
-        [TestMethod]//[Title("Select_Simple 1")]
+        [Category("Projection Operators")]
+        [Test]//[Title("Select_Simple 1")]
         [Description("This sample uses the select clause to produce a sequence of ints one higher than " +
                      "those in an existing array of ints.")]
         public void Select_Simple_1()
@@ -156,8 +170,8 @@ namespace InterLinq.Tests
             //throw new NotImplementedException();
         }
 
-        [TestCategory("Projection Operators")]
-        [TestMethod]//[Title("Select_Simple 2")]
+        [Category("Projection Operators")]
+        [Test]//[Title("Select_Simple 2")]
         [Description("This sample uses the select clause to return a sequence of product names.")]
         public void Select_Simple_2()
         {
@@ -172,8 +186,8 @@ namespace InterLinq.Tests
             }
         }
 
-        [TestCategory("Projection Operators")]
-        [TestMethod]//[Title("Select_Transformation")]
+        [Category("Projection Operators")]
+        [Test]//[Title("Select_Transformation")]
         [Description("This sample uses the select clause to produce a sequence of strings representing " +
                      "the text version of a sequence of ints.")]
         public void Select_Transformation()
@@ -194,8 +208,8 @@ namespace InterLinq.Tests
             //throw new NotImplementedException();
         }
 
-        [TestCategory("Projection Operators")]
-        [TestMethod]//[Title("Select_Anonymous Types 1")]
+        [Category("Projection Operators")]
+        [Test]//[Title("Select_Anonymous Types 1")]
         [Description("This sample uses the select clause to produce a sequence of the uppercase " +
                      "and lowercase versions of each word in the original array.")]
         public void Projection_Operators()
@@ -214,8 +228,8 @@ namespace InterLinq.Tests
             //throw new NotImplementedException();
         }
 
-        [TestCategory("Projection Operators")]
-        [TestMethod]//[Title("Select_Anonymous Types 2")]
+        [Category("Projection Operators")]
+        [Test]//[Title("Select_Anonymous Types 2")]
         [Description("This sample uses the select clause to produce a sequence containing text " +
                      "representations of digits and a Boolean that specifies whether the text length is even or odd.")]
         public void Select_Anonymous_Types_2()
@@ -235,8 +249,8 @@ namespace InterLinq.Tests
             //throw new NotImplementedException();
         }
 
-        [TestCategory("Projection Operators")]
-        [TestMethod]//[Title("Select_Anonymous Types 3")]
+        [Category("Projection Operators")]
+        [Test]//[Title("Select_Anonymous Types 3")]
         [Description("This sample uses the select clause to produce a sequence containing some properties " +
                      "of Products, including UnitPrice which is renamed to Price " +
                      "in the resulting type.")]
@@ -253,8 +267,8 @@ namespace InterLinq.Tests
             }
         }
 
-        [TestCategory("Projection Operators")]
-        [TestMethod]//[Title("Select_Indexed")]
+        [Category("Projection Operators")]
+        [Test]//[Title("Select_Indexed")]
         [Description("This sample uses an indexed Select clause to determine if the value of ints " +
                      "in an array match their position in the array.")]
         public void Select_Indexed()
@@ -272,8 +286,8 @@ namespace InterLinq.Tests
             //throw new NotImplementedException();
         }
 
-        [TestCategory("Projection Operators")]
-        [TestMethod]//[Title("Select_Filtered")]
+        [Category("Projection Operators")]
+        [Test]//[Title("Select_Filtered")]
         [Description("This sample combines select and where to make a simple query that returns " +
                      "the text form of each digit less than 5.")]
         public void Select_Filtered()
@@ -295,8 +309,8 @@ namespace InterLinq.Tests
             //throw new NotImplementedException();
         }
 
-        [TestCategory("Projection Operators")]
-        [TestMethod]//[Title("SelectMany_Compound from 1")]
+        [Category("Projection Operators")]
+        [Test]//[Title("SelectMany_Compound from 1")]
         [Description("This sample uses a compound from clause to make a query that returns all pairs " +
                      "of numbers from both arrays in which the number from numbersA is less than the number " +
                      "from numbersB.")]
@@ -320,8 +334,8 @@ namespace InterLinq.Tests
             //throw new NotImplementedException();
         }
 
-        [TestCategory("Projection Operators")]
-        [TestMethod]//[Title("SelectMany_Compound from 2")]
+        [Category("Projection Operators")]
+        [Test]//[Title("SelectMany_Compound from 2")]
         [Description("This sample uses a compound from clause to select all orders where the " +
                      "order total is less than 500.00.")]
         public void SelectMany_Compound_from_2()
@@ -335,8 +349,8 @@ namespace InterLinq.Tests
             ObjectDumper.Write(orders);
         }
 
-        [TestCategory("Projection Operators")]
-        [TestMethod]//[Title("SelectMany_Compound from 3")]
+        [Category("Projection Operators")]
+        [Test]//[Title("SelectMany_Compound from 3")]
         [Description("This sample uses a compound from clause to select all orders where the " +
                      "order was made in 1998 or later.")]
         public void SelectMany_Compound_from_3()
@@ -350,8 +364,8 @@ namespace InterLinq.Tests
             ObjectDumper.Write(orders);
         }
 
-        [TestCategory("Projection Operators")]
-        [TestMethod]//[Title("SelectMany_With let")]
+        [Category("Projection Operators")]
+        [Test]//[Title("SelectMany_With let")]
         [Description("This sample uses a compound from clause to select all orders where the " +
                      "order total is greater than 2000.00 and uses a let clause to avoid " +
                      "requesting the total twice.")]
@@ -367,8 +381,8 @@ namespace InterLinq.Tests
             ObjectDumper.Write(orders);
         }
 
-        [TestCategory("Projection Operators")]
-        [TestMethod]//[Title("SelectMany_Compound from")]
+        [Category("Projection Operators")]
+        [Test]//[Title("SelectMany_Compound from")]
         [Description("This sample uses compound from clauses so that filtering on customers can " +
                      "be done before selecting their orders.  This makes the query more efficient by " +
                      "not selecting and then discarding orders for customers outside of Washington.")]
@@ -386,8 +400,8 @@ namespace InterLinq.Tests
             ObjectDumper.Write(orders);
         }
 
-        [TestCategory("Projection Operators")]
-        [TestMethod]//[Title("SelectMany_Indexed")]
+        [Category("Projection Operators")]
+        [Test]//[Title("SelectMany_Indexed")]
         [Description("This sample uses an indexed SelectMany clause to select all orders, " +
                      "while referring to customers by the order in which they are returned " +
                      "from the query.")]
@@ -402,8 +416,8 @@ namespace InterLinq.Tests
             ObjectDumper.Write(customerOrders);
         }
 
-        [TestCategory("Partitioning Operators")]
-        [TestMethod]//[Title("Take_Simple")]
+        [Category("Partitioning Operators")]
+        [Test]//[Title("Take_Simple")]
         [Description("This sample uses Take to get only the first 3 elements of " +
                      "the array.")]
         public void Take_Simple()
@@ -417,8 +431,8 @@ namespace InterLinq.Tests
             }
         }
 
-        [TestCategory("Partitioning Operators")]
-        [TestMethod]//[Title("Take_Nested")]
+        [Category("Partitioning Operators")]
+        [Test]//[Title("Take_Nested")]
         [Description("This sample uses Take to get the first 3 orders from customers " +
                      "in Washington.")]
         public void Take_Nested()
@@ -437,8 +451,8 @@ namespace InterLinq.Tests
             }
         }
 
-        [TestCategory("Partitioning Operators")]
-        [TestMethod]//[Title("Skip_Simple")]
+        [Category("Partitioning Operators")]
+        [Test]//[Title("Skip_Simple")]
         [Description("This sample uses Skip to get all but the first four elements of " +
                      "the array.")]
         public void Skip_Simple()
@@ -456,8 +470,8 @@ namespace InterLinq.Tests
             //throw new NotImplementedException();
         }
 
-        [TestCategory("Partitioning Operators")]
-        [TestMethod]//[Title("Skip_Nested")]
+        [Category("Partitioning Operators")]
+        [Test]//[Title("Skip_Nested")]
         [Description("This sample uses Take to get all but the first 2 orders from customers " +
                      "in Washington.")]
         public void Skip_Nested()
@@ -477,8 +491,8 @@ namespace InterLinq.Tests
             }
         }
 
-        [TestCategory("Partitioning Operators")]
-        [TestMethod]//[Title("TakeWhile_Simple")]
+        [Category("Partitioning Operators")]
+        [Test]//[Title("TakeWhile_Simple")]
         [Description("This sample uses TakeWhile to return elements starting from the " +
                      "beginning of the array until a number is read whose value is not less than 6.")]
         public void TakeWhile_Simple()
@@ -496,8 +510,8 @@ namespace InterLinq.Tests
             //throw new NotImplementedException();
         }
 
-        [TestCategory("Partitioning Operators")]
-        [TestMethod]//[Title("TakeWhile_Indexed")]
+        [Category("Partitioning Operators")]
+        [Test]//[Title("TakeWhile_Indexed")]
         [Description("This sample uses TakeWhile to return elements starting from the " +
                     "beginning of the array until a number is hit that is less than its position " +
                     "in the array.")]
@@ -516,8 +530,8 @@ namespace InterLinq.Tests
             //throw new NotImplementedException();
         }
 
-        [TestCategory("Partitioning Operators")]
-        [TestMethod]//[Title("SkipWhile_Simple")]
+        [Category("Partitioning Operators")]
+        [Test]//[Title("SkipWhile_Simple")]
         [Description("This sample uses SkipWhile to get the elements of the array " +
                     "starting from the first element divisible by 3.")]
         public void SkipWhile_Simple()
@@ -538,8 +552,8 @@ namespace InterLinq.Tests
             //throw new NotImplementedException();
         }
 
-        [TestCategory("Partitioning Operators")]
-        [TestMethod]//[Title("SkipWhile_Indexed")]
+        [Category("Partitioning Operators")]
+        [Test]//[Title("SkipWhile_Indexed")]
         [Description("This sample uses SkipWhile to get the elements of the array " +
                     "starting from the first element less than its position.")]
         public void SkipWhile_Indexed()
@@ -557,8 +571,8 @@ namespace InterLinq.Tests
             //throw new NotImplementedException();
         }
 
-        [TestCategory("Ordering Operators")]
-        [TestMethod]//[Title("OrderBy_Simple 1")]
+        [Category("Ordering Operators")]
+        [Test]//[Title("OrderBy_Simple 1")]
         [Description("This sample uses orderby to sort a list of words alphabetically.")]
         public void OrderBy_Simple_1()
         {
@@ -578,8 +592,8 @@ namespace InterLinq.Tests
             //throw new NotImplementedException();
         }
 
-        [TestCategory("Ordering Operators")]
-        [TestMethod]//[Title("OrderBy_Simple 2")]
+        [Category("Ordering Operators")]
+        [Test]//[Title("OrderBy_Simple 2")]
         [Description("This sample uses orderby to sort a list of words by length.")]
         public void OrderBy_Simple_2()
         {
@@ -599,8 +613,8 @@ namespace InterLinq.Tests
             //throw new NotImplementedException();
         }
 
-        [TestCategory("Ordering Operators")]
-        [TestMethod]//[Title("OrderBy_Simple 3")]
+        [Category("Ordering Operators")]
+        [Test]//[Title("OrderBy_Simple 3")]
         [Description("This sample uses orderby to sort a list of products by name. " +
                     "Use the \"descending\" keyword at the end of the clause to perform a reverse ordering.")]
         public void OrderBy_Simple_3()
@@ -622,8 +636,8 @@ namespace InterLinq.Tests
             }
         }
 
-        [TestCategory("Ordering Operators")]
-        [TestMethod]//[Title("OrderBy_Comparer")]
+        [Category("Ordering Operators")]
+        [Test]//[Title("OrderBy_Comparer")]
         [Description("This sample uses an OrderBy clause with a custom comparer to " +
                      "do a case-insensitive sort of the words in an array.")]
         public void OrderBy_Comparer()
@@ -638,8 +652,8 @@ namespace InterLinq.Tests
             //throw new NotImplementedException();
         }
 
-        [TestCategory("Ordering Operators")]
-        [TestMethod]//[Title("OrderByDescending_Simple 1")]
+        [Category("Ordering Operators")]
+        [Test]//[Title("OrderByDescending_Simple 1")]
         [Description("This sample uses orderby and descending to sort a list of " +
                      "doubles from highest to lowest.")]
         public void OrderByDescending_Simple_1()
@@ -660,8 +674,8 @@ namespace InterLinq.Tests
             //throw new NotImplementedException();
         }
 
-        [TestCategory("Ordering Operators")]
-        [TestMethod]//[Title("OrderByDescending_Simple 2")]
+        [Category("Ordering Operators")]
+        [Test]//[Title("OrderByDescending_Simple 2")]
         [Description("This sample uses orderby to sort a list of products by units in stock " +
                      "from highest to lowest.")]
         public void OrderByDescending_Simple_2()
@@ -674,8 +688,8 @@ namespace InterLinq.Tests
             ObjectDumper.Write(sortedProducts);
         }
 
-        [TestCategory("Ordering Operators")]
-        [TestMethod]//[Title("OrderByDescending_Comparer")]
+        [Category("Ordering Operators")]
+        [Test]//[Title("OrderByDescending_Comparer")]
         [Description("This sample uses method syntax to call OrderByDescending because it " +
                     " enables you to use a custom comparer.")]
         public void OrderByDescending_Comparer()
@@ -689,8 +703,8 @@ namespace InterLinq.Tests
             //throw new NotImplementedException();
         }
 
-        [TestCategory("Ordering Operators")]
-        [TestMethod]//[Title("ThenBy_Simple")]
+        [Category("Ordering Operators")]
+        [Test]//[Title("ThenBy_Simple")]
         [Description("This sample uses a compound orderby to sort a list of digits, " +
                      "first by length of their name, and then alphabetically by the name itself.")]
         public void ThenBy_Simple()
@@ -709,8 +723,8 @@ namespace InterLinq.Tests
             }
         }
 
-        [TestCategory("Ordering Operators")]
-        [TestMethod]//[Title("ThenBy_Comparer")]
+        [Category("Ordering Operators")]
+        [Test]//[Title("ThenBy_Comparer")]
         [Description("The first query in this sample uses method syntax to call OrderBy and ThenBy with a custom comparer to " +
                      "sort first by word length and then by a case-insensitive sort of the words in an array. " +
                      "The second two queries show another way to perform the same task.")]
@@ -737,8 +751,8 @@ namespace InterLinq.Tests
             //throw new NotImplementedException();
         }
 
-        [TestCategory("Ordering Operators")]
-        [TestMethod]//[Title("ThenByDescending_Simple")]
+        [Category("Ordering Operators")]
+        [Test]//[Title("ThenByDescending_Simple")]
         [Description("This sample uses a compound orderby to sort a list of products, " +
                      "first by category, and then by unit price, from highest to lowest.")]
         public void ThenByDescending_Simple()
@@ -751,8 +765,8 @@ namespace InterLinq.Tests
             ObjectDumper.Write(sortedProducts);
         }
 
-        [TestCategory("Ordering Operators")]
-        [TestMethod]//[Title("ThenByDescending_Comparer")]
+        [Category("Ordering Operators")]
+        [Test]//[Title("ThenByDescending_Comparer")]
         [Description("This sample uses an OrderBy and a ThenBy clause with a custom comparer to " +
                      "sort first by word length and then by a case-insensitive descending sort " +
                      "of the words in an array.")]
@@ -769,8 +783,8 @@ namespace InterLinq.Tests
             //throw new NotImplementedException();
         }
 
-        [TestCategory("Ordering Operators")]
-        [TestMethod]//[Title("Reverse")]
+        [Category("Ordering Operators")]
+        [Test]//[Title("Reverse")]
         [Description("This sample uses Reverse to create a list of all digits in the array whose " +
                      "second letter is 'i' that is reversed from the order in the original array.")]
         public void Reverse()
@@ -788,8 +802,8 @@ namespace InterLinq.Tests
             }
         }
 
-        [TestCategory("Grouping Operators")]
-        [TestMethod]//[Title("GroupBy_Simple 1")]
+        [Category("Grouping Operators")]
+        [Test]//[Title("GroupBy_Simple 1")]
         [Description("This sample uses group by to partition a list of numbers by " +
                     "their remainder when divided by 5.")]
         public void GroupBy_Simple_1()
@@ -813,8 +827,8 @@ namespace InterLinq.Tests
             //throw new NotImplementedException();
         }
 
-        [TestCategory("Grouping Operators")]
-        [TestMethod]//[Title("GroupBy_Simple 2")]
+        [Category("Grouping Operators")]
+        [Test]//[Title("GroupBy_Simple 2")]
         [Description("This sample uses group by to partition a list of words by " +
                      "their first letter.")]
         public void GroupBy_Simple_2()
@@ -838,8 +852,8 @@ namespace InterLinq.Tests
             //throw new NotImplementedException();
         }
 
-        [TestCategory("Grouping Operators")]
-        [TestMethod]//[Title("GroupBy_Simple 3")]
+        [Category("Grouping Operators")]
+        [Test]//[Title("GroupBy_Simple 3")]
         [Description("This sample uses group by to partition a list of products by category.")]
         public void GroupBy_Simple_3()
         {
@@ -851,8 +865,8 @@ namespace InterLinq.Tests
             ObjectDumper.Write(orderGroups, 1);
         }
 
-        [TestCategory("Grouping Operators")]
-        [TestMethod]//[Title("GroupBy_Nested")]
+        [Category("Grouping Operators")]
+        [Test]//[Title("GroupBy_Nested")]
         [Description("This sample uses group by to partition a list of each customer's orders, " +
                      "first by year, and then by month.")]
         public void GroupBy_Nested()
@@ -900,8 +914,8 @@ namespace InterLinq.Tests
             }
         }
 
-        [TestCategory("Grouping Operators")]
-        [TestMethod]//[Title("GroupBy_Comparer")]
+        [Category("Grouping Operators")]
+        [Test]//[Title("GroupBy_Comparer")]
         [Description("This sample uses GroupBy with method syntax to partition trimmed elements of an array using " +
                      "a custom comparer that matches words that are anagrams of each other.")]
         public void GroupBy_Comparer()
@@ -915,8 +929,8 @@ namespace InterLinq.Tests
             //throw new NotImplementedException();
         }
 
-        [TestCategory("Grouping Operators")]
-        [TestMethod]//[Title("GroupBy_Comparer, Mapped")]
+        [Category("Grouping Operators")]
+        [Test]//[Title("GroupBy_Comparer, Mapped")]
         [Description("This sample uses the GroupBy method to partition trimmed elements of an array using " +
                      "a custom comparer that matches words that are anagrams of each other, " +
                      "and then converts the results to uppercase.")]
@@ -935,8 +949,8 @@ namespace InterLinq.Tests
             //throw new NotImplementedException();
         }
 
-        [TestCategory("Set Operators")]
-        [TestMethod]//[Title("Distinct_1")]
+        [Category("Set Operators")]
+        [Test]//[Title("Distinct_1")]
         [Description("This sample uses Distinct to remove duplicate elements in a sequence of " +
                     "factors of 300.")]
         public void Distinct_1()
@@ -954,8 +968,8 @@ namespace InterLinq.Tests
             //throw new NotImplementedException();
         }
 
-        [TestCategory("Set Operators")]
-        [TestMethod]//[Title("Distinct_2")]
+        [Category("Set Operators")]
+        [Test]//[Title("Distinct_2")]
         [Description("This sample uses Distinct to find the unique Category names.")]
         public void Distinct_2()
         {
@@ -971,8 +985,8 @@ namespace InterLinq.Tests
             }
         }
 
-        [TestCategory("Set Operators")]
-        [TestMethod]//[Title("Union_1")]
+        [Category("Set Operators")]
+        [Test]//[Title("Union_1")]
         [Description("This sample uses Union to create one sequence that contains the unique values " +
                      "from both arrays.")]
         public void Union_1()
@@ -991,8 +1005,8 @@ namespace InterLinq.Tests
             //throw new NotImplementedException();
         }
 
-        [TestCategory("Set Operators")]
-        [TestMethod]//[Title("Union_2")]
+        [Category("Set Operators")]
+        [Test]//[Title("Union_2")]
         [Description("This sample uses the Union method to create one sequence that contains the unique first letter " +
                      "from both product and customer names. Union is only available through method syntax.")]
         public void Union_2()
@@ -1014,8 +1028,8 @@ namespace InterLinq.Tests
             }
         }
 
-        [TestCategory("Set Operators")]
-        [TestMethod]//[Title("Intersect_1")]
+        [Category("Set Operators")]
+        [Test]//[Title("Intersect_1")]
         [Description("This sample uses Intersect to create one sequence that contains the common values " +
                     "shared by both arrays.")]
         public void Intersect_1()
@@ -1034,8 +1048,8 @@ namespace InterLinq.Tests
             //throw new NotImplementedException();
         }
 
-        [TestCategory("Set Operators")]
-        [TestMethod]//[Title("Intersect_2")]
+        [Category("Set Operators")]
+        [Test]//[Title("Intersect_2")]
         [Description("This sample uses Intersect to create one sequence that contains the common first letter " +
                      "from both product and customer names.")]
         public void Intersect_2()
@@ -1056,8 +1070,8 @@ namespace InterLinq.Tests
             }
         }
 
-        [TestCategory("Set Operators")]
-        [TestMethod]//[Title("Except_1")]
+        [Category("Set Operators")]
+        [Test]//[Title("Except_1")]
         [Description("This sample uses Except to create a sequence that contains the values from numbersA" +
                      "that are not also in numbersB.")]
         public void Except_1()
@@ -1076,8 +1090,8 @@ namespace InterLinq.Tests
             //throw new NotImplementedException();
         }
 
-        [TestCategory("Set Operators")]
-        [TestMethod]//[Title("Except_2")]
+        [Category("Set Operators")]
+        [Test]//[Title("Except_2")]
         [Description("This sample uses Except to create one sequence that contains the first letters " +
                      "of product names that are not also first letters of customer names.")]
         public void Except_2()
@@ -1098,8 +1112,8 @@ namespace InterLinq.Tests
             }
         }
 
-        [TestCategory("Conversion Operators")]
-        [TestMethod]//[Title("ToArray")]
+        [Category("Conversion Operators")]
+        [Test]//[Title("ToArray")]
         [Description("This sample uses ToArray to immediately evaluate a sequence into an array.")]
         public void ToArray()
         {
@@ -1120,8 +1134,8 @@ namespace InterLinq.Tests
             //throw new NotImplementedException();
         }
 
-        [TestCategory("Conversion Operators")]
-        [TestMethod]//[Title("ToList")]
+        [Category("Conversion Operators")]
+        [Test]//[Title("ToList")]
         [Description("This sample uses ToList to immediately evaluate a sequence into a List<T>.")]
         public void ToList()
         {
@@ -1142,8 +1156,8 @@ namespace InterLinq.Tests
             //throw new NotImplementedException();
         }
 
-        [TestCategory("Conversion Operators")]
-        [TestMethod]//[Title("ToDictionary")]
+        [Category("Conversion Operators")]
+        [Test]//[Title("ToDictionary")]
         [Description("This sample uses ToDictionary to immediately evaluate a sequence and a " +
                     "related key expression into a dictionary.")]
         public void ToDictionary()
@@ -1160,8 +1174,8 @@ namespace InterLinq.Tests
             //throw new NotImplementedException();
         }
 
-        [TestCategory("Conversion Operators")]
-        [TestMethod]//[Title("OfType")]
+        [Category("Conversion Operators")]
+        [Test]//[Title("OfType")]
         [Description("This sample uses OfType to return only the elements of the array that are of type double.")]
         public void OfType()
         {
@@ -1178,8 +1192,8 @@ namespace InterLinq.Tests
             //throw new NotImplementedException();
         }
 
-        [TestCategory("Element Operators")]
-        [TestMethod]//[Title("First_Simple")]
+        [Category("Element Operators")]
+        [Test]//[Title("First_Simple")]
         [Description("This sample uses First to return the first matching element " +
                      "as a Product, instead of as a sequence containing a Product.")]
         public void First_Simple()
@@ -1193,8 +1207,8 @@ namespace InterLinq.Tests
             ObjectDumper.Write(product12);
         }
 
-        [TestCategory("Element Operators")]
-        [TestMethod]//[Title("First_Condition")]
+        [Category("Element Operators")]
+        [Test]//[Title("First_Condition")]
         [Description("This sample uses First to find the first element in the array that starts with 'o'.")]
         public void First_Condition()
         {
@@ -1203,8 +1217,8 @@ namespace InterLinq.Tests
             ObjectDumper.Write(product12);
         }
 
-        [TestCategory("Element Operators")]
-        [TestMethod]//[Title("FirstOrDefault_Simple")]
+        [Category("Element Operators")]
+        [Test]//[Title("FirstOrDefault_Simple")]
         [Description("This sample uses FirstOrDefault to try to return the first element of the sequence, " +
                      "unless there are no elements, in which case the default value for that type " +
                      "is returned. FirstOrDefault is useful for creating outer joins.")]
@@ -1217,8 +1231,8 @@ namespace InterLinq.Tests
             //throw new NotImplementedException();
         }
 
-        [TestCategory("Element Operators")]
-        [TestMethod]//[Title("FirstOrDefault_Condition")]
+        [Category("Element Operators")]
+        [Test]//[Title("FirstOrDefault_Condition")]
         [Description("This sample uses FirstOrDefault to return the first product whose ProductID is 789 " +
                      "as a single Product object, unless there is no match, in which case null is returned.")]
         public void FirstOrDefault_Condition()
@@ -1228,8 +1242,8 @@ namespace InterLinq.Tests
             Console.WriteLine("Product 789 exists: {0}", product789 != null);
         }
 
-        [TestCategory("Element Operators")]
-        [TestMethod]//[Title("ElementAt")]
+        [Category("Element Operators")]
+        [Test]//[Title("ElementAt")]
         [Description("This sample uses ElementAt to retrieve the second number greater than 5 " +
                      "from an array.")]
         public void ElementAt()
@@ -1247,8 +1261,8 @@ namespace InterLinq.Tests
             //throw new NotImplementedException();
         }
 
-        [TestCategory("Generation Operators")]
-        [TestMethod]//[Title("Range")]
+        [Category("Generation Operators")]
+        [Test]//[Title("Range")]
         [Description("This sample uses Range to generate a sequence of numbers from 100 to 149 " +
                      "that is used to find which numbers in that range are odd and even.")]
         public void Range()
@@ -1265,8 +1279,8 @@ namespace InterLinq.Tests
             //throw new NotImplementedException();
         }
 
-        [TestCategory("Generation Operators")]
-        [TestMethod]//[Title("Repeat")]
+        [Category("Generation Operators")]
+        [Test]//[Title("Repeat")]
         [Description("This sample uses Repeat to generate a sequence that contains the number 7 ten times.")]
         public void Repeat()
         {
@@ -1281,8 +1295,8 @@ namespace InterLinq.Tests
         }
 
 
-        [TestCategory("Quantifiers")]
-        [TestMethod]//[Title("Any_Simple")]
+        [Category("Quantifiers")]
+        [Test]//[Title("Any_Simple")]
         [Description("This sample uses Any to determine if any of the words in the array " +
                      "contain the substring 'ei'.")]
         public void Any_Simple()
@@ -1297,8 +1311,8 @@ namespace InterLinq.Tests
             //throw new NotImplementedException();
         }
 
-        [TestCategory("Quantifiers")]
-        [TestMethod]//[Title("Any_Grouped")]
+        [Category("Quantifiers")]
+        [Test]//[Title("Any_Grouped")]
         [Description("This sample uses Any to return a grouped a list of products only for categories " +
                      "that have at least one product that is out of stock.")]
         public void Any_Grouped()
@@ -1312,8 +1326,8 @@ namespace InterLinq.Tests
             ObjectDumper.Write(productGroups, 1);
         }
 
-        [TestCategory("Quantifiers")]
-        [TestMethod]//[Title("All_Simple")]
+        [Category("Quantifiers")]
+        [Test]//[Title("All_Simple")]
         [Description("This sample uses All to determine whether an array contains " +
                      "only odd numbers.")]
         public void All_Simple()
@@ -1327,8 +1341,8 @@ namespace InterLinq.Tests
             //throw new NotImplementedException();
         }
 
-        [TestCategory("Quantifiers")]
-        [TestMethod]//[Title("All_Grouped")]
+        [Category("Quantifiers")]
+        [Test]//[Title("All_Grouped")]
         [Description("This sample uses All to return a grouped a list of products only for categories " +
                      "that have all of their products in stock.")]
         public void All_Grouped()
@@ -1342,8 +1356,8 @@ namespace InterLinq.Tests
             ObjectDumper.Write(productGroups, 1);
         }
 
-        [TestCategory("Aggregate Operators")]
-        [TestMethod]//[Title("Count_Simple")]
+        [Category("Aggregate Operators")]
+        [Test]//[Title("Count_Simple")]
         [Description("This sample uses Count to get the number of unique prime factors of 300.")]
         public void Count_Simple()
         {
@@ -1356,8 +1370,8 @@ namespace InterLinq.Tests
             //throw new NotImplementedException();
         }
 
-        [TestCategory("Aggregate Operators")]
-        [TestMethod]//[Title("Count_Conditional")]
+        [Category("Aggregate Operators")]
+        [Test]//[Title("Count_Conditional")]
         [Description("This sample uses Count to get the number of odd ints in the array.")]
         public void Count_Conditional()
         {
@@ -1370,8 +1384,8 @@ namespace InterLinq.Tests
             Assert.AreEqual(expected, actual, "Getting the number of odd ints in the array did not return values, expected {0} but the actual was {1}.", expected, actual);
         }
 
-        [TestCategory("Aggregate Operators")]
-        [TestMethod]//[Title("Count_Nested")]
+        [Category("Aggregate Operators")]
+        [Test]//[Title("Count_Nested")]
         [Description("This sample uses Count to return a list of customers and how many orders " +
                      "each has.")]
         public void Count_Nested()
@@ -1383,8 +1397,8 @@ namespace InterLinq.Tests
             ObjectDumper.Write(orderCounts);
         }
 
-        [TestCategory("Aggregate Operators")]
-        [TestMethod]//[Title("Count_Grouped")]
+        [Category("Aggregate Operators")]
+        [Test]//[Title("Count_Grouped")]
         [Description("This sample uses Count to return a list of categories and how many products " +
                      "each has.")]
         public void Count_Grouped()
@@ -1398,8 +1412,8 @@ namespace InterLinq.Tests
         }
 
         //DONE Changed "get the total of" to "add all"
-        [TestCategory("Aggregate Operators")]
-        [TestMethod]//[Title("Sum_Simple")]
+        [Category("Aggregate Operators")]
+        [Test]//[Title("Sum_Simple")]
         [Description("This sample uses Sum to add all the numbers in an array.")]
         public void Sum_Simple()
         {
@@ -1412,8 +1426,8 @@ namespace InterLinq.Tests
             //throw new NotImplementedException();
         }
 
-        [TestCategory("Aggregate Operators")]
-        [TestMethod]//[Title("Sum_Projection")]
+        [Category("Aggregate Operators")]
+        [Test]//[Title("Sum_Projection")]
         [Description("This sample uses Sum to get the total number of characters of all words " +
                      "in the array.")]
         public void Sum_Projection()
@@ -1425,8 +1439,8 @@ namespace InterLinq.Tests
 
 
 
-        [TestCategory("Aggregate Operators")]
-        [TestMethod]//[Title("Sum_Grouped")]
+        [Category("Aggregate Operators")]
+        [Test]//[Title("Sum_Grouped")]
         [Description("This sample uses Sum to get the total units in stock for each product category.")]
         public void Sum_Grouped()
         {
@@ -1438,8 +1452,8 @@ namespace InterLinq.Tests
             ObjectDumper.Write(categories);
         }
 
-        [TestCategory("Aggregate Operators")]
-        [TestMethod]//[Title("Min_Simple")]
+        [Category("Aggregate Operators")]
+        [Test]//[Title("Min_Simple")]
         [Description("This sample uses Min to get the lowest number in an array.")]
         public void Min_Simple()
         {
@@ -1452,8 +1466,8 @@ namespace InterLinq.Tests
             //throw new NotImplementedException();
         }
 
-        [TestCategory("Aggregate Operators")]
-        [TestMethod]//[Title("Min_Projection")]
+        [Category("Aggregate Operators")]
+        [Test]//[Title("Min_Projection")]
         [Description("This sample uses Min to get the length of the shortest word in an array.")]
         public void Min_Projection()
         {
@@ -1466,8 +1480,8 @@ namespace InterLinq.Tests
             //throw new NotImplementedException();
         }
 
-        [TestCategory("Aggregate Operators")]
-        [TestMethod]//[Title("Min_Grouped")]
+        [Category("Aggregate Operators")]
+        [Test]//[Title("Min_Grouped")]
         [Description("This sample uses Min to get the cheapest price among each category's products.")]
         public void Min_Grouped()
         {
@@ -1479,8 +1493,8 @@ namespace InterLinq.Tests
             ObjectDumper.Write(categories);
         }
 
-        [TestCategory("Aggregate Operators")]
-        [TestMethod]//[Title("Min_Elements")]
+        [Category("Aggregate Operators")]
+        [Test]//[Title("Min_Elements")]
         [Description("This sample uses Min to get the products with the lowest price in each category.")]
         public void Min_Elements()
         {
@@ -1493,8 +1507,8 @@ namespace InterLinq.Tests
             ObjectDumper.Write(categories, 1);
         }
 
-        [TestCategory("Aggregate Operators")]
-        [TestMethod]//[Title("Max_Simple")]
+        [Category("Aggregate Operators")]
+        [Test]//[Title("Max_Simple")]
         [Description("This sample uses Max to get the highest number in an array. Note that the method returns a single value.")]
         public void Max_Simple()
         {
@@ -1507,8 +1521,8 @@ namespace InterLinq.Tests
             //throw new NotImplementedException();
         }
 
-        [TestCategory("Aggregate Operators")]
-        [TestMethod]//[Title("Max_Projection")]
+        [Category("Aggregate Operators")]
+        [Test]//[Title("Max_Projection")]
         [Description("This sample uses Max to get the length of the longest word in an array.")]
         public void Max_Projection()
         {
@@ -1521,8 +1535,8 @@ namespace InterLinq.Tests
             //throw new NotImplementedException();
         }
 
-        [TestCategory("Aggregate Operators")]
-        [TestMethod]//[Title("Max_Grouped")]
+        [Category("Aggregate Operators")]
+        [Test]//[Title("Max_Grouped")]
         [Description("This sample uses Max to get the most expensive price among each category's products.")]
         public void Max_Grouped()
         {
@@ -1534,8 +1548,8 @@ namespace InterLinq.Tests
             ObjectDumper.Write(categories);
         }
 
-        [TestCategory("Aggregate Operators")]
-        [TestMethod]//[Title("Max_Elements")]
+        [Category("Aggregate Operators")]
+        [Test]//[Title("Max_Elements")]
         [Description("This sample uses Max to get the products with the most expensive price in each category.")]
         public void Max_Elements()
         {
@@ -1548,8 +1562,8 @@ namespace InterLinq.Tests
             ObjectDumper.Write(categories, 1);
         }
 
-        [TestCategory("Aggregate Operators")]
-        [TestMethod]//[Title("Average_Simple")]
+        [Category("Aggregate Operators")]
+        [Test]//[Title("Average_Simple")]
         [Description("This sample uses Average to get the average of all numbers in an array.")]
         public void Average_Simple()
         {
@@ -1562,8 +1576,8 @@ namespace InterLinq.Tests
             //throw new NotImplementedException();
         }
 
-        [TestCategory("Aggregate Operators")]
-        [TestMethod]//[Title("Average_Projection")]
+        [Category("Aggregate Operators")]
+        [Test]//[Title("Average_Projection")]
         [Description("This sample uses Average to get the average length of the words in the array.")]
         public void Average_Projection()
         {
@@ -1576,8 +1590,8 @@ namespace InterLinq.Tests
             //throw new NotImplementedException();
         }
 
-        [TestCategory("Aggregate Operators")]
-        [TestMethod]//[Title("Average_Grouped")]
+        [Category("Aggregate Operators")]
+        [Test]//[Title("Average_Grouped")]
         [Description("This sample uses Average to get the average price of each category's products.")]
         public void Average_Grouped()
         {
@@ -1589,8 +1603,8 @@ namespace InterLinq.Tests
             ObjectDumper.Write(categories);
         }
 
-        [TestCategory("Aggregate Operators")]
-        [TestMethod]//[Title("Aggregate_Simple")]
+        [Category("Aggregate Operators")]
+        [Test]//[Title("Aggregate_Simple")]
         [Description("This sample uses Aggregate to create a running product on the array that " +
                      "calculates the total product of all elements.")]
         public void Aggregate_Simple()
@@ -1604,8 +1618,8 @@ namespace InterLinq.Tests
             //throw new NotImplementedException();
         }
 
-        [TestCategory("Aggregate Operators")]
-        [TestMethod]//[Title("Aggregate_Seed")]
+        [Category("Aggregate Operators")]
+        [Test]//[Title("Aggregate_Seed")]
         [Description("This sample uses Aggregate to create a running account balance that " +
                      "subtracts each withdrawal from the initial balance of 100, as long as " +
                      "the balance never drops below 0.")]
@@ -1625,8 +1639,8 @@ namespace InterLinq.Tests
             //throw new NotImplementedException();
         }
 
-        [TestCategory("Miscellaneous Operators")]
-        [TestMethod]//[Title("Concat_1")]
+        [Category("Miscellaneous Operators")]
+        [Test]//[Title("Concat_1")]
         [Description("This sample uses Concat to create one sequence that contains each array's " +
                      "values, one after the other.")]
         public void Concat_1()
@@ -1645,8 +1659,8 @@ namespace InterLinq.Tests
             //throw new NotImplementedException();
         }
 
-        [TestCategory("Miscellaneous Operators")]
-        [TestMethod]//[Title("Concat_2")]
+        [Category("Miscellaneous Operators")]
+        [Test]//[Title("Concat_2")]
         [Description("This sample uses Concat to create one sequence that contains the names of " +
                      "all customers and products, including any duplicates.")]
         public void Concat_2()
@@ -1667,8 +1681,8 @@ namespace InterLinq.Tests
             }
         }
 
-        [TestCategory("Miscellaneous Operators")]
-        [TestMethod]//[Title("EqualAll_1")]
+        [Category("Miscellaneous Operators")]
+        [Test]//[Title("EqualAll_1")]
         [Description("This sample uses SequenceEquals to see if two sequences match on all elements " +
                      "in the same order.")]
         public void EqualAll_1()
@@ -1683,8 +1697,8 @@ namespace InterLinq.Tests
             //throw new NotImplementedException();
         }
 
-        [TestCategory("Miscellaneous Operators")]
-        [TestMethod]//[Title("EqualAll_2")]
+        [Category("Miscellaneous Operators")]
+        [Test]//[Title("EqualAll_2")]
         [Description("This sample uses SequenceEqual to see if two sequences match on all elements " +
                      "in the same order.")]
         public void EqualAll_2()
@@ -1699,8 +1713,8 @@ namespace InterLinq.Tests
             //throw new NotImplementedException();
         }
 
-        [TestCategory("Query Execution")]
-        [TestMethod]//[Title("Deferred_Execution")]
+        [Category("Query Execution")]
+        [Test]//[Title("Deferred_Execution")]
         [Description("The following sample shows how query execution is deferred until the query is " +
                      "enumerated at a foreach statement.")]
         public void Deferred_Execution()
@@ -1726,8 +1740,8 @@ namespace InterLinq.Tests
             //throw new NotImplementedException();
         }
 
-        [TestCategory("Query Execution")]
-        [TestMethod]//[Title("Immediate_Execution")]
+        [Category("Query Execution")]
+        [Test]//[Title("Immediate_Execution")]
         [Description("The following sample shows how queries can be executed immediately, and their results " +
                     " stored in memory, with methods such as ToList.")]
         public void Immediate_Execution()
@@ -1753,8 +1767,8 @@ namespace InterLinq.Tests
             //throw new NotImplementedException();
         }
 
-        [TestCategory("Query Execution")]
-        [TestMethod]//[Title("Query_Reuse")]
+        [Category("Query Execution")]
+        [Test]//[Title("Query_Reuse")]
         [Description("The following sample shows how, because of deferred execution, queries can be used " +
                      "again after data changes and will then operate on the new data.")]
         public void Query_Reuse()
@@ -1804,8 +1818,8 @@ namespace InterLinq.Tests
             //throw new NotImplementedException();
         }
 
-        [TestCategory("Join Operators")]
-        [TestMethod]//[Title("Inner_Join")]
+        [Category("Join Operators")]
+        [Test]//[Title("Inner_Join")]
         [Description("This sample shows how to perform a simple inner equijoin of two sequences to " +
             "to produce a flat result set that consists of each element in suppliers that has a matching element " +
             "in customers.")]
@@ -1822,8 +1836,8 @@ namespace InterLinq.Tests
             }
         }
 
-        [TestCategory("Join Operators")]
-        [TestMethod]//[Title("Group_Join")]
+        [Category("Join Operators")]
+        [Test]//[Title("Group_Join")]
         [Description("A group join produces a hierarchical sequence. The following query is an inner join " +
                     " that produces a sequence of objects, each of which has a key and an inner sequence of all matching elements.")]
         public void Group_Join()
@@ -1844,8 +1858,8 @@ namespace InterLinq.Tests
             }
         }
 
-        [TestCategory("Join Operators")]
-        [TestMethod]//[Title("Cross_Join_with_Group_Join")]
+        [Category("Join Operators")]
+        [Test]//[Title("Cross_Join_with_Group_Join")]
         [Description("The group join operator is more general than join, as this slightly more verbose " +
             "version of the cross join sample shows.")]
         public void Cross_Join_with_Group_Join()
@@ -1868,8 +1882,8 @@ namespace InterLinq.Tests
                 Console.WriteLine(item.ProductName + ": " + item.Category);
             }
         }
-        [TestCategory("Join Operators")]
-        [TestMethod]//[Title("Left_Outer_Join_1")]
+        [Category("Join Operators")]
+        [Test]//[Title("Left_Outer_Join_1")]
         [Description("A left outer join produces a result set that includes all the left hand side elements at " +
             "least once, even if they don't match any right hand side elements.")]
         public void Left_Outer_Join_1()
@@ -1892,8 +1906,8 @@ namespace InterLinq.Tests
             }
         }
 
-        [TestCategory("Join Operators")]
-        [TestMethod]//[Title("Left_Outer_Join_2")]
+        [Category("Join Operators")]
+        [Test]//[Title("Left_Outer_Join_2")]
         [Description("For each customer in the table of customers, this query returns all the suppliers " +
                      "from that same country, or else a string indicating that no suppliers from that country were found.")]
         public void Left_Outer_Join_2()
@@ -1916,8 +1930,8 @@ namespace InterLinq.Tests
             }
         }
 
-        [TestCategory("Join Operators")]
-        [TestMethod]//[Title("Left_Outer_Join_with_Composite_Key")]
+        [Category("Join Operators")]
+        [Test]//[Title("Left_Outer_Join_with_Composite_Key")]
         [Description("For each supplier in the table of suppliers, this query returns all the customers " +
                      "from the same city and country, or else a string indicating that no customers from that city/country were found. " +
                      "Note the use of anonymous types to encapsulate the multiple key values.")]

@@ -111,7 +111,8 @@ namespace InterLinq.Types.Anonymous
             foreach (PropertyInfo property in ((TypeInfo)memberInfo).DeclaredProperties)
 #endif
             {
-                MetaProperties.Add(new AnonymousMetaProperty(property));
+                if (property.GetIndexParameters().Length == 0)
+                    MetaProperties.Add(new AnonymousMetaProperty(property));
             }
 
             //The represented type is set here, transfered to the Server as String, 

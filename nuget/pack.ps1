@@ -13,3 +13,10 @@ $content = $content -replace '\$version\$',$versionStr
 $content | Out-File $root\nuget\Package.compiled.nuspec
 
 & $root\NuGet\NuGet.exe pack $root\nuget\Package.compiled.nuspec
+
+$content = (Get-Content $root\NuGet\Package2.nuspec) 
+$content = $content -replace '\$version\$',$versionStr
+
+$content | Out-File $root\nuget\Package2.compiled.nuspec
+
+& $root\NuGet\NuGet.exe pack $root\nuget\Package2.compiled.nuspec

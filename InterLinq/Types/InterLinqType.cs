@@ -15,7 +15,7 @@ namespace InterLinq.Types
 #if !SILVERLIGHT
     [Serializable]
 #endif
-    [DataContract(Namespace="http://schemas.interlinq.com/2011/03/")]
+    [DataContract(Namespace = "http://schemas.interlinq.com/2011/03/")]
     [KnownType(typeof(AnonymousMetaType))]
     public class InterLinqType : InterLinqMemberInfo
     {
@@ -52,7 +52,7 @@ namespace InterLinq.Types
 #if !SILVERLIGHT
                 var tp = Type.GetType(representedType);
                 if (tp != null)
-                   return tp;
+                    return tp;
 
                 typeMap.TryGetValue(representedType, out tp);
                 if (tp == null)
@@ -68,8 +68,8 @@ namespace InterLinq.Types
                         }
                     }
                 }
- 
-                return typeMap[representedType];                 
+
+                return typeMap[representedType];
 #else
                 return Type.GetType(representedType);
 #endif

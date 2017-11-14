@@ -27,8 +27,7 @@ namespace InterLinq.Objects
             Type type = MethodBase.GetCurrentMethod().DeclaringType;
             BindingFlags flags = BindingFlags.Instance | BindingFlags.Public;
             getMethod = type.GetMethod("Get", flags, null, Type.EmptyTypes, null);
-            getByNameMethod = type.GetMethod("Get", flags, null, new Type[] { typeof(string), typeof(object), typeof(object[]) }, null);
-            
+            getByNameMethod = type.GetMethod("Get", flags, null, new Type[] { typeof(object), typeof(string), typeof(object), typeof(object[]) }, null);
         }
 
         /// <summary>
@@ -103,7 +102,7 @@ namespace InterLinq.Objects
         public IQueryable Get(Type type, object additionalObject, string queryName, object sessionObject, params object[] parameters)
         {
             MethodInfo genericGetTableMethod = getByNameMethod.MakeGenericMethod(type);
-            return (IQueryable)genericGetTableMethod.Invoke(this, new object[] { additionalObject, queryName, parameters });
+            return (IQueryable)genericGetTableMethod.Invoke(this, new object[] { additionalObject, queryName, sessionObject, parameters });
         }
 
         /// <summary>

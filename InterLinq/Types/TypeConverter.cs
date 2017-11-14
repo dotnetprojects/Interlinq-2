@@ -111,11 +111,21 @@ namespace InterLinq.Types
 #else
                 ConstructorInfo[] constructors = wantedType.GetTypeInfo().DeclaredConstructors.ToArray();
 #endif
-                if (constructors.Length != 1)
+                int nr = 0;
+                if (constructors.Length == 2)
+                {
+                    var p0 = constructors[0].GetParameters();
+                    var p1 = constructors[1].GetParameters();
+                    if (p0.Length > 0 && p1.Length > 0)
+                        throw new Exception("Usualy, anonymous types have just one constructor.");
+                    else
+                        nr = p0.Length > 0 ? 1 : 0;
+                }
+                else if (constructors.Length != 1)
                 {
                     throw new Exception("Usualy, anonymous types have just one constructor.");
                 }
-                ConstructorInfo constructor = constructors[0];
+                ConstructorInfo constructor = constructors[nr];
                 foreach (ParameterInfo parameter in constructor.GetParameters())
                 {
                     object propertyValue = null;
