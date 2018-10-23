@@ -75,7 +75,7 @@ namespace InterLinq.EntityFramework4
         /// </summary>
         /// <returns>True, if the session creation was successful. False, if not.</returns>
         /// <seealso cref="IQueryHandler.StartSession"/>
-        public object StartSession()
+        public object StartSession(Type expressionQueryType)
         {
             return new object();
         }

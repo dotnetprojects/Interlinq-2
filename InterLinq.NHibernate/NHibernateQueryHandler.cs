@@ -32,7 +32,7 @@ namespace InterLinq.NHibernate
             {
                 if (currentSession == null)
                 {
-                    StartSession();
+                    StartSession(null);
                 }
                 return currentSession;
             }
@@ -86,7 +86,7 @@ namespace InterLinq.NHibernate
         /// </summary>
         /// <returns>True, if the session creation was successful. False, if not.</returns>
         /// <seealso cref="IQueryHandler.StartSession"/>
-        public object StartSession()
+        public object StartSession(Type expressionQueryType)
         {
             //if (currentSession == null)
             //{

@@ -37,7 +37,7 @@ namespace InterLinq
         /// Tells the <see cref="T:System.Linq.IQueryHandler"/> to start a new the session.
         /// </summary>
         /// <returns>Session object, if the session creation was successful. <c>null</c>, if not.</returns>
-        object StartSession();
+        object StartSession(Type expressionQueryType);
 
         /// <summary>
         /// Tells the <see cref="T:System.Linq.IQueryHandler"/> to close the specified session.

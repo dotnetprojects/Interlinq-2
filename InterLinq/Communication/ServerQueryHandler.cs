@@ -169,7 +169,20 @@ namespace InterLinq.Communication
             object session = null;
             try
             {
-                session = QueryHandler.StartSession();
+                Type expressionQueryType = null;
+                if (serializableExpression.Type is InterLinqType)
+                {
+                    var ilt = (InterLinqType) serializableExpression.Type;
+                    if (ilt.GenericArguments.Count > 0)
+                    {
+                        if (ilt.GenericArguments[0] is InterLinqType)
+                        {
+                            ilt = (InterLinqType)ilt.GenericArguments[0];
+                            expressionQueryType = ilt.RepresentedType;
+                        }
+                    }
+                }
+                session = QueryHandler.StartSession(expressionQueryType);
                 IQueryable<T> query = serializableExpression.Convert(QueryHandler, session) as IQueryable<T>;
                 if (query != null)
                 {
@@ -230,7 +243,7 @@ namespace InterLinq.Communication
             object session = null;
             try
             {
-                session = QueryHandler.StartSession();
+                session = QueryHandler.StartSession(null);
                 object returnValue = serializableExpression.Convert(QueryHandler, session);
                 object convertedReturnValue = TypeConverter.ConvertToSerializable(returnValue);
                 return convertedReturnValue;

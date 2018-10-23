@@ -73,7 +73,7 @@ namespace InterLinq.Objects
         /// </summary>
         /// <returns>Session object, if the session creation was successful. <c>null</c>, if not.</returns>
         /// <seealso cref="M:InterLinq.Objects.IQueryHandler.StartSession"/>
-        public object StartSession()
+        public object StartSession(Type expressionQueryType)
         {
             return new object();
         }

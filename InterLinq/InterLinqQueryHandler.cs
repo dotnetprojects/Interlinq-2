@@ -72,7 +72,7 @@ namespace InterLinq
         /// </summary>
         /// <returns>True, if the session creation was successful. False, if not.</returns>
         /// <seealso cref="IQueryHandler.StartSession"/>
-        public virtual object StartSession()
+        public virtual object StartSession(Type expressionQueryType)
         {
             return new object();
         }
