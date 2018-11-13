@@ -170,14 +170,14 @@ namespace InterLinq.Communication
             try
             {
                 Type expressionQueryType = null;
-                if (serializableExpression.Type is InterLinqType)
+                if (serializableExpression.Type != null)
                 {
-                    var ilt = (InterLinqType) serializableExpression.Type;
+                    var ilt = serializableExpression.Type;
                     if (ilt.GenericArguments.Count > 0)
                     {
-                        if (ilt.GenericArguments[0] is InterLinqType)
+                        if (ilt.GenericArguments[0] != null)
                         {
-                            ilt = (InterLinqType)ilt.GenericArguments[0];
+                            ilt = ilt.GenericArguments[0];
                             expressionQueryType = ilt.RepresentedType;
                         }
                     }
@@ -243,7 +243,20 @@ namespace InterLinq.Communication
             object session = null;
             try
             {
-                session = QueryHandler.StartSession(null);
+                Type expressionQueryType = null;
+                if (serializableExpression.Type != null)
+                {
+                    var ilt = serializableExpression.Type;
+                    if (ilt.GenericArguments.Count > 0)
+                    {
+                        if (ilt.GenericArguments[0] != null)
+                        {
+                            ilt = ilt.GenericArguments[0];
+                            expressionQueryType = ilt.RepresentedType;
+                        }
+                    }
+                }
+                session = QueryHandler.StartSession(expressionQueryType);
                 object returnValue = serializableExpression.Convert(QueryHandler, session);
                 object convertedReturnValue = TypeConverter.ConvertToSerializable(returnValue);
                 return convertedReturnValue;
