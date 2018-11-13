@@ -256,6 +256,12 @@ namespace InterLinq.Communication
                         }
                     }
                 }
+                if (expressionQueryType == null && serializableExpression is SerializableMethodCallExpression)
+                {
+                    var m = (SerializableMethodCallExpression) serializableExpression;
+                    if (m.Method.IsGeneric)
+                        expressionQueryType = m.Method.GenericArguments[0].RepresentedType;
+                }
                 session = QueryHandler.StartSession(expressionQueryType);
                 object returnValue = serializableExpression.Convert(QueryHandler, session);
                 object convertedReturnValue = TypeConverter.ConvertToSerializable(returnValue);
