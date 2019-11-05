@@ -29,7 +29,7 @@ namespace InterLinq
     ///     }
     /// </code>
     /// </example>
-    public abstract class InterLinqContext
+    public class InterLinqContext
     {
 
         #region Properties
@@ -47,7 +47,7 @@ namespace InterLinq
         /// Initializes this class.
         /// </summary>
         /// <param name="queryHandler"><see cref="IQueryHandler"/> instance.</param>
-        protected InterLinqContext(IQueryHandler queryHandler)
+        public InterLinqContext(IQueryHandler queryHandler)
         {
             if (queryHandler == null)
             {
