@@ -19,12 +19,23 @@ namespace Sample.Server
 
             //atm sample data
 
-            return (new[] {
+            if (type == typeof(Dto1))
+                return (new[] {
                 new Dto1() { Id = Guid.NewGuid(), Name = "bbaacc" },
                 new Dto1() { Id = Guid.NewGuid(), Name = "dssaarer" },
                 new Dto1() { Id = Guid.NewGuid(), Name = "hzfjh" },
                 new Dto1() { Id = Guid.NewGuid(), Name = "hjfhfj" }
             }).AsQueryable();
+
+            if (type == typeof(Dto2))
+                return (new[] {
+                new Dto2() { Id = Guid.NewGuid(), Name = "bbaacc" },
+                new Dto2() { Id = Guid.NewGuid(), Name = "dssaarer" },
+                new Dto2() { Id = Guid.NewGuid(), Name = "hzfjh" },
+                new Dto2() { Id = Guid.NewGuid(), Name = "hjfhfj" }
+            }).AsQueryable();
+
+            return null;
         }
 
         public IQueryable<T> Get<T>(object additionalObject, string queryName, object sessionObject, params object[] parameters) where T : class

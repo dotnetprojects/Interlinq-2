@@ -12,7 +12,11 @@ namespace Sample.Client
             Console.ReadLine();
             var ws = new WebsocketQueryRemoteHandler("ws://127.0.0.1/ws");
             var ctx = new QueryableProvider(ws);
-            var qry = ctx.Query<Dto1>().Where(x => x.Name.Contains("aa")).ToList();
+            var qry = from d1 in ctx.Query<Dto1>()
+                      join d2 in ctx.Query<Dto2>() on d1.Name equals d2.Name
+                      select new { d1, d2 };
+
+            var res = qry.ToList();
         }
     }
 }
