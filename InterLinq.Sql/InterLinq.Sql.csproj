@@ -84,13 +84,9 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <None Include="InterLinq.Sql.cd" />
-  </ItemGroup>
-  <ItemGroup>
     <EmbeddedResource Include="..\InterLinqLicense.txt">
       <Link>Properties\InterLinqLicense.txt</Link>
     </EmbeddedResource>
-    <Content Include="InterLinq.Sql_NamespaceDoc.xml" />
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include="Microsoft.Net.Client.3.5">

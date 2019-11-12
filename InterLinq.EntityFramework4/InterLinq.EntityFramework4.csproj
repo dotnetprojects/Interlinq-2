@@ -51,13 +51,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="InterLinq.EntityFramework4.cd" />
-  </ItemGroup>
-  <ItemGroup>
     <EmbeddedResource Include="..\InterLinqLicense.txt">
       <Link>Properties\InterLinqLicense.txt</Link>
     </EmbeddedResource>
-    <Content Include="InterLinq.EntityFramework4_NamespaceDoc.xml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\InterLinq\InterLinq.csproj">

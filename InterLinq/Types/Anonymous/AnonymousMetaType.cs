@@ -128,7 +128,7 @@ namespace InterLinq.Types.Anonymous
         /// <returns>Returns the generated <see cref="Type"/>.</returns>
         protected override Type CreateClrType()
         {
-#if !NETFX_CORE
+#if !NETSTANDARD
             return GenerateAnonymousType(DynamicAssemblyHolder.Instance.ModuleBuilder);
 #else
             return null;
