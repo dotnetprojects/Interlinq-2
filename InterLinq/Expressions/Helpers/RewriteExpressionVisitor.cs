@@ -66,7 +66,6 @@ namespace InterLinq.Expressions.Helpers
             return Expression.Constant(expression.Value, expression.Type);
         }
 
-#if !SILVERLIGHT
         /// <summary>
         /// Creates a <see cref="System.Linq.Expressions.Expression{T}"/>.
         /// </summary>
@@ -77,23 +76,6 @@ namespace InterLinq.Expressions.Helpers
         {
             return Expression.Lambda<T>(VisitExpression(expression.Body), VisitCollection<ParameterExpression>(expression.Parameters));
         }
-#else
-		/// <summary>
-        /// Creates a <see cref="System.Linq.Expressions.Expression{T}"/>.
-        /// </summary>
-        /// <param name="expression"><see cref="System.Linq.Expressions.Expression{T}"/> to visit.</param>
-        /// <returns>Returns a <see cref="System.Linq.Expressions.Expression{T}"/>.</returns>
-        /// <seealso cref="ExpressionVisitor.VisitTypedExpression{T}"/>
-        public override object VisitTypedExpression<T>(Expression<T> expression)
-        {
-            return Expression.Lambda<T>(VisitExpression(expression.Body), VisitCollection<ParameterExpression>(expression.Parameters));
-        }
-
-        public override object FakeVisitTypedExpression(Expression expression, Type type)
-        {
-            return null;
-        }
-#endif
 
         /// <summary>
         /// Creates a <see cref="InvocationExpression"/>.

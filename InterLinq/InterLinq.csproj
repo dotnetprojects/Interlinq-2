@@ -142,18 +142,12 @@
     <Compile Include="InterLinqQueryProvider.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Communication\Communication.cd" />
-    <None Include="Expressions\Helpers\Visitor.cd" />
-    <None Include="Expressions\SerializableExpressions.cd" />
     <None Include="Types\Anonymous\AnonymousTypes.cd" />
-    <None Include="Types\InterLinqTypeSystem.cd" />
-    <None Include="InterLinq.cd" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="..\InterLinqLicense.txt">
       <Link>Properties\InterLinqLicense.txt</Link>
     </EmbeddedResource>
-    <Content Include="InterLinqNamespaceDoc.xml" />
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include="Microsoft.Net.Client.3.5">

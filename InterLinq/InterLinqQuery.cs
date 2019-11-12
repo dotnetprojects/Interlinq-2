@@ -12,9 +12,7 @@ namespace InterLinq
     /// <summary>
     /// Base Class for InterLinq Queries.
     /// </summary>
-#if !SILVERLIGHT
     [Serializable]
-#endif
     [DataContract(Namespace = "http://schemas.interlinq.com/2011/03/")]
     public abstract class InterLinqQueryBase
     {
@@ -53,9 +51,7 @@ namespace InterLinq
         /// <summary>
         /// See <see cref="Type">Element Type</see> of the <see cref="Expression"/>.
         /// </summary>
-#if !SILVERLIGHT
         [NonSerialized]
-#endif
         protected Type elementType;
         /// <summary>
         /// Gets or sets a <see cref="Type">Element Type</see> of the <see cref="Expression"/>.

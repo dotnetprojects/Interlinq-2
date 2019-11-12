@@ -10,9 +10,7 @@ namespace InterLinq.Types.Anonymous
     /// Serializable abstraction of LINQ's <see cref="IGrouping{TKey, TElement}"/>.
     /// </summary>
     /// <seealso cref="IGrouping{TKey, TElement}"/>
-#if !SILVERLIGHT
     [Serializable]
-#endif
     [DataContract(Namespace="http://schemas.interlinq.com/2011/03/")]
     public abstract class InterLinqGroupingBase
     {
@@ -35,9 +33,7 @@ namespace InterLinq.Types.Anonymous
     /// </summary>
     /// <seealso cref="InterLinqGroupingBase"/>
     /// <seealso cref="IGrouping{TKey, TElement}"/>
-#if !SILVERLIGHT
     [Serializable]
-#endif
     [DataContract(Namespace="http://schemas.interlinq.com/2011/03/")]
     public class InterLinqGrouping<TKey, TElement> : InterLinqGroupingBase, IGrouping<TKey, TElement>
     {

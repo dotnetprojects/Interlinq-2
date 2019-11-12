@@ -11,9 +11,7 @@ namespace InterLinq.Expressions
     /// <summary>
     /// A serializable version of <see cref="InvocationExpression"/>.
     /// </summary>
-#if !SILVERLIGHT
     [Serializable]
-#endif
     [DataContract(Namespace="http://schemas.interlinq.com/2011/03/")]
     public class SerializableInvocationExpression : SerializableExpression
     {

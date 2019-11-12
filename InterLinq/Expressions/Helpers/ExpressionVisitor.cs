@@ -105,28 +105,12 @@ namespace InterLinq.Expressions.Helpers
             else if (expression is LambdaExpression)
             {
                 Type fromType = expression.GetType();
-#if !NETFX_CORE
                 if (fromType.IsGenericType)
-#else
-                if (fromType.GetTypeInfo().IsGenericType)
-#endif
                 {
-#if !SILVERLIGHT
                     Type[] genericTypes = fromType.GetGenericArguments();
                     MethodInfo executeMethod = GetType().GetMethod("VisitTypedExpression", BindingFlags.NonPublic | BindingFlags.Instance);
                     MethodInfo genericExecuteMethod = executeMethod.MakeGenericMethod(genericTypes);
                     returnValue = genericExecuteMethod.Invoke(this, new object[] { expression });
-#else
-#if !NETFX_CORE
-					Type[] genericTypes = fromType.GetGenericArguments();
-                    MethodInfo executeMethod = GetType().GetMethod("FakeVisitTypedExpression", BindingFlags.Public | BindingFlags.Instance);
-#else
-                    Type[] genericTypes = fromType.GetTypeInfo().GenericTypeArguments;
-                    MethodInfo executeMethod = GetType().GetTypeInfo().GetDeclaredMethod("FakeVisitTypedExpression");
-#endif
-                    //MethodInfo genericExecuteMethod = executeMethod.MakeGenericMethod(genericTypes);
-                    returnValue = executeMethod.Invoke(this, new object[] { expression, genericTypes[0] });
-#endif
                 }
                 else
                 {
@@ -295,29 +279,12 @@ namespace InterLinq.Expressions.Helpers
         /// <returns>Returns the result of the visit.</returns>
         protected abstract object VisitConstantExpression(ConstantExpression expression);
 
-#if !SILVERLIGHT
         /// <summary>
         /// Visit a <see cref="System.Linq.Expressions.Expression{T}"/>.
         /// </summary>
         /// <param name="expression"><see cref="System.Linq.Expressions.Expression{T}"/> to visit.</param>
         /// <returns>Returns the result of the visit.</returns>
         protected abstract object VisitTypedExpression<T>(Expression<T> expression);
-#else
-        /// <summary>
-        /// Visit a <see cref="System.Linq.Expressions.Expression{T}"/>.
-        /// </summary>
-        /// <param name="expression"><see cref="System.Linq.Expressions.Expression{T}"/> to visit.</param>
-        /// <returns>Returns the result of the visit.</returns>
-        public abstract object VisitTypedExpression<T>(Expression<T> expression);
-
-		/// <summary>
-        /// Silverlight workaround methodaccess exception on VisitTypedExpression<T>
-        /// </summary>
-        /// <param name="expression"></param>
-        /// <param name="type"></param>
-        /// <returns></returns>
-        public abstract object FakeVisitTypedExpression(Expression expression, Type type);
-#endif
 
         /// <summary>
         /// Visit a <see cref="InvocationExpression"/>.

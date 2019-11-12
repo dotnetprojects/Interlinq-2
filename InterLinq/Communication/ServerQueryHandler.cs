@@ -82,11 +82,6 @@ namespace InterLinq.Communication
         {
             try
             {
-//#if DEBUG
-//                Console.WriteLine(expression);
-//                Console.WriteLine();
-//#endif
-
                 MethodInfo mInfo;
                 Type realType = (Type)expression.Type.GetClrVersion();
                 if (typeof(IQueryable).IsAssignableFrom(realType) &&
@@ -103,18 +98,6 @@ namespace InterLinq.Communication
                 }
 
                 object returnValue = mInfo.Invoke(this, new object[] { expression });
-
-//#if !SILVERLIGHT && DEBUG
-//                try
-//                {
-//                    System.IO.MemoryStream ms = new System.IO.MemoryStream();
-//                    new System.Runtime.Serialization.NetDataContractSerializer().Serialize(ms, returnValue);
-//                }
-//                catch (Exception)
-//                {
-//                    throw;
-//                }
-//#endif
 
                 return returnValue;
             }

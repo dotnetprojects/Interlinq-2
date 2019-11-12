@@ -11,9 +11,7 @@ namespace InterLinq.Types
     /// <seealso cref="InterLinqMethodBase"/>
     /// <seealso cref="InterLinqMemberInfo"/>
     /// <seealso cref="ConstructorInfo"/>
-#if !SILVERLIGHT
     [Serializable]
-#endif
     [DataContract(Namespace="http://schemas.interlinq.com/2011/03/")]
     public class InterLinqConstructorInfo : InterLinqMethodBase
     {

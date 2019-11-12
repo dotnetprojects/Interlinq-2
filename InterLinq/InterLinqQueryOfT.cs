@@ -15,21 +15,16 @@ namespace InterLinq
     /// </summary>
     /// <typeparam name="T">The type of the content of the data source.</typeparam>
     /// <seealso cref="InterLinqQueryBase"/>
-#if !SILVERLIGHT
     [Serializable]
-#endif
     [DataContract(Name = "InterLinqQueryOf{0}_Hash{#}", Namespace = "http://schemas.interlinq.com/2011/03/")]
     public class InterLinqQuery<T> : InterLinqQueryBase, IOrderedQueryable<T>
     {
         #region Fields
 
-#if !SILVERLIGHT
         [NonSerialized]
-#endif
         private IQueryProvider provider;
-#if !SILVERLIGHT
+
         [NonSerialized]
-#endif
         private Expression expression;
 
         #endregion

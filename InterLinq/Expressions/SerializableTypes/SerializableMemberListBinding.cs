@@ -11,9 +11,7 @@ namespace InterLinq.Expressions.SerializableTypes
     /// <summary>
     /// A serializable version of <see cref="MemberListBinding"/>.
     /// </summary>
-#if !SILVERLIGHT
     [Serializable]
-#endif
     [DataContract(Namespace="http://schemas.interlinq.com/2011/03/")]
     public class SerializableMemberListBinding : SerializableMemberBinding
     {

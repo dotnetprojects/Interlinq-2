@@ -12,9 +12,7 @@ namespace InterLinq.Types
     /// </summary>
     /// <seealso cref="InterLinqMemberInfo"/>
     /// <seealso cref="Type"/>
-#if !SILVERLIGHT
     [Serializable]
-#endif
     [DataContract(Namespace = "http://schemas.interlinq.com/2011/03/")]
     [KnownType(typeof(AnonymousMetaType))]
     public class InterLinqType : InterLinqMemberInfo
@@ -49,7 +47,6 @@ namespace InterLinq.Types
         {
             get
             {
-#if !SILVERLIGHT
                 var tp = Type.GetType(representedType);
                 if (tp != null)
                     return tp;
@@ -70,9 +67,6 @@ namespace InterLinq.Types
                 }
 
                 return typeMap[representedType];
-#else
-                return Type.GetType(representedType);
-#endif
             }
             set { representedType = value.FullName; } // AssemblyQualifiedName; }
         }

@@ -13,9 +13,7 @@ namespace InterLinq.Expressions
     /// <summary>
     /// A serializable version of <see cref="Expression"/>.
     /// </summary>
-#if !SILVERLIGHT
     [Serializable]
-#endif
     [DataContract(Namespace="http://schemas.interlinq.com/2011/03/")]
     [KnownType(typeof(SerializableBinaryExpression))]
     [KnownType(typeof(SerializableConditionalExpression))]

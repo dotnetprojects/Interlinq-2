@@ -10,9 +10,7 @@ namespace InterLinq.Expressions
     /// <summary>
     /// A serializable version of <see cref="ConditionalExpression"/>.
     /// </summary>
-#if !SILVERLIGHT
     [Serializable]
-#endif
     [DataContract(Namespace="http://schemas.interlinq.com/2011/03/")]
     public class SerializableConditionalExpression : SerializableExpression
     {

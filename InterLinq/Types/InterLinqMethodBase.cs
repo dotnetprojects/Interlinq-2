@@ -10,9 +10,7 @@ namespace InterLinq.Types
     /// </summary>
     /// <seealso cref="InterLinqMemberInfo"/>
     /// <seealso cref="MethodBase"/>
-#if !SILVERLIGHT
     [Serializable]
-#endif
     [DataContract(Namespace="http://schemas.interlinq.com/2011/03/")]
     [KnownType(typeof(InterLinqConstructorInfo))]
     [KnownType(typeof(InterLinqMethodInfo))]

@@ -116,7 +116,6 @@ namespace InterLinq.Expressions.Helpers
             return new SerializableConstantExpression(expression, this);
         }
 
-#if !SILVERLIGHT
         /// <summary>
         /// Converts a <see cref="Expression{T}"/> to a
         /// <see cref="SerializableExpressionTyped"/>.
@@ -128,24 +127,6 @@ namespace InterLinq.Expressions.Helpers
         {
             return new SerializableExpressionTyped(expression, typeof(T), this);
         }
-#else
-		/// <summary>
-        /// Converts a <see cref="Expression{T}"/> to a
-        /// <see cref="SerializableExpressionTyped"/>.
-        /// </summary>
-        /// <param name="expression"><see cref="Expression{T}"/> to convert.</param>
-        /// <returns>Returns the converted <see cref="SerializableExpressionTyped"/>.</returns>
-        /// <seealso cref="ExpressionVisitor.VisitTypedExpression{T}"/>
-        public override object VisitTypedExpression<T>(Expression<T> expression)
-        {
-            return new SerializableExpressionTyped(expression, typeof(T), this);
-        }
-
-        public override object FakeVisitTypedExpression(Expression expression, Type type)
-        {
-            return new SerializableExpressionTyped(expression as LambdaExpression, type, this);
-        }
-#endif
 
         /// <summary>
         /// Converts a <see cref="InvocationExpression"/> to a
@@ -200,29 +181,12 @@ namespace InterLinq.Expressions.Helpers
                 ConstantExpression innerExpression = (ConstantExpression)expression.Expression;
                 if (innerExpression.Type.IsDisplayClass())
                 {
-#if !SILVERLIGHT
                     object value = ((FieldInfo)expression.Member).GetValue(innerExpression.Value);
-#else
-#if !NETFX_CORE
-					MethodInfo executeMethod = GetType().GetMethod("GetValue", BindingFlags.Public | BindingFlags.Instance);
-#else
-                    MethodInfo executeMethod = GetType().GetTypeInfo().GetDeclaredMethod("GetValue");
-#endif
-                    MethodInfo genericExecuteMethod = executeMethod.MakeGenericMethod(expression.Type);
-                    object value = genericExecuteMethod.Invoke(this, new object[] { Expression.PropertyOrField(innerExpression, expression.Member.Name) });
-#endif
                     return Visit(Expression.Constant(value));
                 }
             }
             return new SerializableMemberExpression(expression, this);
         }
-
-#if SILVERLIGHT
-		public T GetValue<T>(Expression innerExpression)
-        {
-            return Expression.Lambda<Func<T>>(innerExpression).Compile()();
-        }
-#endif
 
         /// <summary>
         /// Converts a <see cref="MemberInitExpression"/> to a

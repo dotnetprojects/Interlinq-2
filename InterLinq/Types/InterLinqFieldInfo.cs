@@ -11,9 +11,7 @@ namespace InterLinq.Types
     /// </summary>
     /// <seealso cref="InterLinqMemberInfo"/>
     /// <seealso cref="FieldInfo"/>
-#if !SILVERLIGHT
     [Serializable]
-#endif
     [DataContract(Namespace="http://schemas.interlinq.com/2011/03/")]
     public class InterLinqFieldInfo : InterLinqMemberInfo
     {

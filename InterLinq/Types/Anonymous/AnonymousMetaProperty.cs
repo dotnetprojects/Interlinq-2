@@ -8,9 +8,7 @@ namespace InterLinq.Types.Anonymous
     /// <summary>
     /// Class that represents a property of an anonymous type.
     /// </summary>
-#if !SILVERLIGHT
     [Serializable]
-#endif
     [DataContract(Namespace="http://schemas.interlinq.com/2011/03/")]
     public class AnonymousMetaProperty
     {

@@ -13,9 +13,7 @@ namespace InterLinq.Expressions
     /// <summary>
     /// A serializable version of <see cref="NewArrayExpression"/>.
     /// </summary>
-#if !SILVERLIGHT
     [Serializable]
-#endif
     [DataContract(Namespace="http://schemas.interlinq.com/2011/03/")]
     public class SerializableNewExpression : SerializableExpression
     {

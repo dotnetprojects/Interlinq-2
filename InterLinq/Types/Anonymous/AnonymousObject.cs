@@ -8,9 +8,7 @@ namespace InterLinq.Types.Anonymous
     /// <summary>
     /// Represents an instance of an <see cref="AnonymousMetaType"/>.
     /// </summary>
-#if !SILVERLIGHT
     [Serializable]
-#endif
     [DataContract(Namespace="http://schemas.interlinq.com/2011/03/")]
     public class AnonymousObject
     {

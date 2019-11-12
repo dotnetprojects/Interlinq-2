@@ -13,9 +13,7 @@ namespace InterLinq.Types.Anonymous
     /// A class representing an anonymous type.
     /// <seealso cref="InterLinqType"/>
     /// </summary>
-#if !SILVERLIGHT
     [Serializable]
-#endif
     [DataContract(Namespace="http://schemas.interlinq.com/2011/03/")]
     public class AnonymousMetaType : InterLinqType
     {

@@ -9,9 +9,7 @@ namespace InterLinq.Types
     /// InterLINQ representation of <see cref="MemberInfo"/>.
     /// </summary>
     /// <seealso cref="MemberInfo"/>
-#if !SILVERLIGHT
     [Serializable]
-#endif
     [DataContract(Namespace="http://schemas.interlinq.com/2011/03/")]
     [KnownType(typeof(InterLinqPropertyInfo))]
     [KnownType(typeof(InterLinqMethodBase))]
