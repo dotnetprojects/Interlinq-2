@@ -74,8 +74,7 @@ namespace InterLinq.Types.Anonymous
                                       Version = new Version("1.0.0.0")
                                   };
 
-            assembly = ad.DefineDynamicAssembly(
-             an, AssemblyBuilderAccess.Run);
+            assembly = AssemblyBuilder.DefineDynamicAssembly(an, AssemblyBuilderAccess.Run);
 
             // create a new module to hold code in the assembly
             ModuleBuilder = assembly.GetDynamicModule("InterLinq.Types.Anonymous.Module") ??
