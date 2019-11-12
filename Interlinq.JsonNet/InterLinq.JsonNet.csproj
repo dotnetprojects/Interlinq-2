@@ -13,7 +13,7 @@
     <PackageId>DotNetProjects.Interlinq.JsonNet</PackageId>
     <Authors>DotNetProjects</Authors>
     <PackageProjectUrl>https://github.com/dotnetprojects/Interlinq-2</PackageProjectUrl>
-    <PackageLicenseExpression>MSPL</PackageLicenseExpression>
+    <PackageLicenseExpression>MS-PL</PackageLicenseExpression>
   </PropertyGroup>
   <ItemGroup>
      <PackageReference Include="Newtonsoft.Json">
