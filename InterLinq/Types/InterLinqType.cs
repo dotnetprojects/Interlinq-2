@@ -58,6 +58,7 @@ namespace InterLinq.Types
                     {
                         if (!typeMap.ContainsKey(representedType))
                         {
+                            typeMap[representedType] = null;
                             foreach (var assembly in System.AppDomain.CurrentDomain.GetAssemblies())
                             {
                                 try
