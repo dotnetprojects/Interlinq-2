@@ -58,10 +58,22 @@ namespace InterLinq.Types
                     {
                         if (!typeMap.ContainsKey(representedType))
                         {
-                            typeMap[representedType] =
-                                System.AppDomain.CurrentDomain.GetAssemblies()
-                                    .SelectMany(x => x.GetTypes())
-                                    .FirstOrDefault(x => x.FullName == representedType);
+                            foreach (var assembly in System.AppDomain.CurrentDomain.GetAssemblies())
+                            {
+                                try
+                                {
+                                    var type = assembly.GetTypes().FirstOrDefault(x => x.FullName == representedType);
+
+                                    if (type != null)
+                                    {
+                                        typeMap[representedType] = type;
+                                        break;
+                                    }
+                                }
+                                catch (Exception)
+                                {   
+                                }
+                            }
                         }
                     }
                 }
